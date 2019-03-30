@@ -8,7 +8,7 @@
 
 * Show memory usage of a process
 
-  `ps -o rss,pid,cmd [pid]`
+  `ps -o rss,pid,cmd -p [pid]`
 
 * Show threads of a process, with names
 
@@ -16,11 +16,11 @@
 
 * Top 5 processes by thread count
 
-  `ps axh -o nlwp,pid,cmd | sort -rn | head -n 5`
+  `ps axh -o nlwp,pid,cmd --sort -nlwp | head -n 5`
 
 * Top 5 processes by memory usage (in kbs)
 
-  `ps axh -o rss,pid,cmd | sort -rn | head -n 5`
+  `ps axh -o rss,pid,cmd --sort -rss | head -n 5`
 
 ## Options - BSD style
 
@@ -39,7 +39,8 @@
 
 ## Options - long style
 
-* `--sort` sort by given column
+* `--sort` sort by given column, `-xyz` is descending sort by xyz,
+  `+xyz` is ascending
 
 ## Column names
 
