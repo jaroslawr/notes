@@ -1,10 +1,11 @@
 # lsof
 
-# Examples
+## Caveats
 
-* Use AND to join filtering criteria
+* Running without sudo simply gives an incomplete file list and no
+  warnings
 
-  `lsof -a -p 123 -i TCP`
+## Examples
 
 * Disable hostname resolution
 
@@ -16,8 +17,20 @@
 
 * List files on a specific file system
 
-  `lsof /`
+  `lsof [path]`
 
-* Find what processes access specific file
+* Find processes accessing given file
 
-  `lsof file`
+  `lsof [file]`
+
+* List files belonging to given process
+
+   `lsof -p [pid]`
+
+* List TCP sockets
+
+    `lsof -i TCP`
+
+* Join filtering criteria with AND
+
+  `lsof -a -p [pid] -i TCP`

@@ -1,6 +1,6 @@
 # ncat
 
-# Examples
+## Examples
 
 * Start one-shot server
 
