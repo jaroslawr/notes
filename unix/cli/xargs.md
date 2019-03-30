@@ -1,4 +1,4 @@
-# Xargs
+# xargs
 
 ## Examples
 

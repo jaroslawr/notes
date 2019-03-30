@@ -1,4 +1,4 @@
-# Find
+# find
 
 ## Examples
 

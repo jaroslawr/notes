@@ -1,4 +1,4 @@
-# Sort
+# sort
 
 ## Examples
 

@@ -1,4 +1,4 @@
-# Grep
+# grep
 
 ## Examples
 

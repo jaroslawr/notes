@@ -1,4 +1,4 @@
-# Sed
+# sed
 
 ## Examples
 

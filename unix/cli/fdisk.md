@@ -1,4 +1,4 @@
-# Fdisk
+# fdisk
 
 ## Examples
 
