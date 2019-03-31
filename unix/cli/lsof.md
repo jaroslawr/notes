@@ -7,30 +7,22 @@
 
 ## Examples
 
-* Disable hostname resolution
-
-  `lsof -n`
-
-* Disable port name resolution
-
-  `lsof -P`
-
-* List files on a specific file system
-
-  `lsof [path]`
-
-* Find processes accessing given file
+* List processes accessing file
 
   `lsof [file]`
 
-* List files belonging to given process
+* List processes accessing file system
 
-   `lsof -p [pid]`
+  `lsof [path]`
 
-* List TCP sockets
+* Display sockets connected to given hostname, with TCP state
 
-    `lsof -i TCP`
+  `lsof -i @hostname -Ts`
 
-* Join filtering criteria with AND
+## Options
 
-  `lsof -a -p [pid] -i TCP`
+* `-p [pid]` files of process with specific pid
+* `-i` list only sockets
+* `-a` join given filtering criteria with AND
+* `-P` disable portname resolution
+* `-n` disable hostname resolution
