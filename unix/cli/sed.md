@@ -2,17 +2,9 @@
 
 ## Examples
 
-* Enable extended regexps
+* Prefix each input line with a prefix
 
-  `sed -E`
-
-* Do not print lines automatically
-
-  `sed -n`
-
-* Change files in place
-
-  `sed -i '[script]' *.txt`
+  `sed 's/^/prefix /`
 
 * Print specific field of a line matching regexp
 
@@ -29,3 +21,9 @@
 * Print lines from 3 to 5 (inclusive) from input file
 
   `sed -n '3,5p' input`
+
+## Options
+
+* `-E` extended regexps
+* `-i` edit files in place
+* `-n` do not print lines automatically
