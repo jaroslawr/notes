@@ -2,50 +2,56 @@
 
 ## Examples
 
-* Display information about specific process
+* List all processes
 
-  `ps u -p [pid]`
+  `ps -efl`
 
-* Show memory usage of a process (in kilobytes)
+* List top 5 processes by memory usage (in kbs)
 
-  `ps -O rss -p [pid]`
+  `ps -e -O rss --sort -rss | head -n 6`
+
+* List top 5 processes by thread count
+
+  `ps -e -O nlwp --sort -nlwp | head -n 6`
+
+* Show info on specific process
+
+  `ps -p [pid] -fl`
+
+* Show info on group of processes
+
+  `ps -p $(pgrep -d, [name]) -fl`
 
 * Show threads of a process, with names
 
-  `ps -T -p [pid]`
-
-* Top 5 processes by thread count
-
-  `ps axh -O nlwp --sort -nlwp | head -n 5`
-
-* Top 5 processes by memory usage (in kbs)
-
-  `ps axh -O rss --sort -rss | head -n 5`
-
-## Options - BSD style
-
-* Filters
-  * `a` from all users
-  * `x` including processes without tty
-
-* Display
-  * `u` user-oriented format (display additional columns)
-  * `e` display environment
-  * `h` do not display header
-
-* Others
-  * `f` display a process tree
+  `ps -p [pid] -T`
 
 ## Options - UNIX style
 
-* Filters
-  * `-p` by pid
-  * `-C` by executable name
+Filters:
+* `-e` all processes
+* `-p [pid]` by pid
+* `-C [name]` by executable name
 
-* Display
-  * `-o` specify columns to display
-  * `-O` specify columns to display, preloaded with basic columns like pid and cmd
-  * `-T` show threads (will display thread names if format is not overwritten by other flags)
+Output:
+* `-f` full format (adds user name column among others)
+* `-F` extra-full format (adds memory usage column among others)
+* `-l` long format (adds process state column among others)
+* `-o` specify columns to display
+* `-O` specify columns to display, preloaded with basic columns like pid and cmd
+* `-T` show threads (will display thread names if format is not overwritten by other flags)
+
+## Options - BSD style
+
+Filters:
+* `a` from all users
+* `x` including processes without tty
+
+Output:
+* `u` user-oriented format (display additional columns)
+* `e` display environment
+* `h` do not display header
+* `f` display a process tree
 
 ## Options - long style
 
@@ -58,20 +64,6 @@
 * `S` interruptible sleep (waiting for an event to complete)
 * `D` uninterruptible sleep (usually IO)
 * `I` idle kernel thread
-* `T` stopped by job control signal
-* `t` stopped by debugger during the tracing
-* `W` paging (not valid since the 2.6.xx kernel)
-* `X` dead (should never be seen)
-* `Z` defunct ("zombie") process, terminated but not reaped by its parent
-
-For BSD formats and when the stat keyword is used, additional characters may be displayed:
-
-* `<` high-priority (not nice to other users)
-* `N` low-priority (nice to other users)
-* `L` has pages locked into memory (for real-time and custom IO)
-* `s` is a session leader
-* `l` is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
-* `+` is in the foreground process group
 
 ## Column names
 
