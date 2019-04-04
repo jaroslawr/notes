@@ -1,15 +1,7 @@
 # ls
 
-## Examples
+## Options
 
-* Sort by modification date, most recent first
-
-  `ls -t`
-
-* Human-readable units
-
-  `ls -h`
-
-* Long listing format
-
-  `ls -l`
+* `-l` long listing format (one file per line)
+* `-h` human-readable units
+* `-t` sort by modification date, most recent first

@@ -1,11 +1,6 @@
 # tcpdump
 
-## Examples
+## Options
 
-* Listen on all interfaces
-
-  `tcpdump -i any`
-
-* Show payload in ascii
-
-  `tcpdump -A`
+* `-i [interface|any]` pick network interface to use
+* `-A` show payload in ascii

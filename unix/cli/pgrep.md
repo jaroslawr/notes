@@ -1,11 +1,6 @@
 # pgrep
 
-## Examples
+## Options
 
-* Match pattern against full command line
-
-  `pgrep -f [pattern]`
-
-* Show full command line in output
-
-  `pgrep -a`
+* `-a` show full command line in output
+* `-f [pattern]` match pattern against full command line

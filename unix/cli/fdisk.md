@@ -1,7 +1,5 @@
 # fdisk
 
-## Examples
+## Options
 
-* List disks and partitions
-
-  `fdisk -l`
+* `-l` list disks and partitions
