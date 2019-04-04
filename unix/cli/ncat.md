@@ -2,18 +2,18 @@
 
 ## Examples
 
-* Start one-shot server
+* TCP server (one shot, util first connection ends)
 
   `ncat -l [hostname] [port]`
 
-* Start persisent server (-k for "keep open")
+* TCP server (persistent, -k for "keep open")
 
-  `ncat -kl [hostname] [port]`
+  `ncat -l -k [hostname] [port]`
 
-* Echo server
+* TCP echo server (persistent)
 
-  `ncat -kl -e /bin/cat [hostname] [port]`
+  `ncat -l -k -e /bin/cat [hostname] [port]`
 
-* Start client
+* TCP client
 
   `ncat [hostname] [port]`
