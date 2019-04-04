@@ -1,17 +1,14 @@
 # du
 
-Stands for "disk usage".
+Shows how much disk space directories and files occupy. Stands for "disk usage".
 
 ## Examples
 
-* Show total size of each argument
-
-  `du -s`
-
-* Show human readable units rather than raw byte count
-
-  `du -h`
-
 * Subdirectories and files in the current directory, from largest to smallest
 
-  `du -hs | sort -hr`
+  `du -hs * | sort -hr`
+
+## Options
+
+* `-s` show total size of each argument
+* `-h` human readable units instead of raw bytes

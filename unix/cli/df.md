@@ -1,9 +1,7 @@
 # df
 
-Stands for "disk free".
+Shows free disk space on all mounted filesystems (stands for "disk free").
 
-## Examples
+## Options
 
-* Show summary of disk use across devices
-
-  `df -h`
+* `-h` human-readable units
