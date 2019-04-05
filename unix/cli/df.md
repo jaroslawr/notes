@@ -1,6 +1,6 @@
 # df
 
-Shows free disk space on all mounted filesystems (stands for "disk free").
+Shows free disk space on all mounted filesystems. Stands for "disk free".
 
 ## Options
 
