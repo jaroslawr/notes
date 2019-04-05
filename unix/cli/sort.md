@@ -21,3 +21,7 @@
 * Sort by human-readable units (1G, 1M, 1K etc.)
 
   `sort [file] -h`
+
+## Options
+
+* `-u` print only unique items
