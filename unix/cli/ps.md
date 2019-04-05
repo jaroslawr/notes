@@ -29,11 +29,13 @@
 ## Options - UNIX style
 
 Filters:
+
 * `-e` all processes
 * `-p [pid]` by pid
 * `-C [name]` by executable name
 
 Output:
+
 * `-f` full format (adds user name column among others)
 * `-F` extra-full format (adds memory usage column among others)
 * `-l` long format (adds process state column among others)
@@ -44,10 +46,12 @@ Output:
 ## Options - BSD style
 
 Filters:
+
 * `a` from all users
 * `x` including processes without tty
 
 Output:
+
 * `u` user-oriented format (display additional columns)
 * `e` display environment
 * `h` do not display header
