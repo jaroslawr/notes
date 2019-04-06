@@ -1,19 +1,19 @@
 # ncat
 
-## Examples
+Sends stdin to remote endpoint, writes received response to stdout.
 
-* TCP server (one shot, util first connection ends)
+TCP client:
 
-  `ncat -l [hostname] [port]`
+`ncat localhost 1234`
 
-* TCP server (persistent, -k for "keep open")
+TCP server:
 
-  `ncat -l -k [hostname] [port]`
+`ncat -l localhost 1234`
 
-* TCP echo server (persistent)
+TCP echo server (persistent, -k is for "keep open"):
 
-  `ncat -l -k -e /bin/cat [hostname] [port]`
+`ncat -l -k -e /bin/cat localhost 1234`
 
-* TCP client
+HTTP client:
 
-  `ncat [hostname] [port]`
+`ncat localhost 1234 <req >resp`

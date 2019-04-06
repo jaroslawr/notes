@@ -1,11 +1,14 @@
 # git show
 
-## Examples
+Show changes made in given commit:
 
-* Show changes to files matching pattern in given commit
-
-  `git show [hash] -- '*pattern*'`
+```
+git show # defaults to HEAD
+git show abc123
+git show abc123 -- foo.c
+git show abc123 -- bar/*.c
+```
 
 ## Options
 
-* `--stat` show only a summary (list of modified files etc.)
+Accepts most [git-diff](git-diff.md) options.

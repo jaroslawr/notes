@@ -1,46 +1,44 @@
 # ps
 
-## Examples
+List all processes:
 
-* List all processes
+`ps -efl`
 
-  `ps -efl`
+List top 5 processes by memory usage (in kbs):
 
-* List top 5 processes by memory usage (in kbs)
+`ps -e -O rss --sort -rss | head -n 6`
 
-  `ps -e -O rss --sort -rss | head -n 6`
+List top 5 processes by thread count:
 
-* List top 5 processes by thread count
+`ps -e -O nlwp --sort -nlwp | head -n 6`
 
-  `ps -e -O nlwp --sort -nlwp | head -n 6`
+Show info on specific process:
 
-* Show info on specific process
+`ps -p 123 -fl`
 
-  `ps -p [pid] -fl`
+Show info on group of processes:
 
-* Show info on group of processes
+`ps -p $(pgrep -d, chrome) -fl`
 
-  `ps -p $(pgrep -d, [name]) -fl`
+Show threads of a process, with names:
 
-* Show threads of a process, with names
-
-  `ps -p [pid] -T`
+`ps -p 123 -T`
 
 ## Options - UNIX style
 
 Filters:
 
 * `-e` all processes
-* `-p [pid]` by pid
-* `-C [name]` by executable name
+* `-p <pid>` by pid
+* `-C <name>` by executable name
 
 Output:
 
 * `-f` full format (adds user name column among others)
 * `-F` extra-full format (adds memory usage column among others)
 * `-l` long format (adds process state column among others)
-* `-o` specify columns to display
-* `-O` specify columns to display, preloaded with basic columns like pid and cmd
+* `-o <columns>` specify columns to display
+* `-O <columns>` specify columns to display, preloaded with basic columns like pid and cmd
 * `-T` show threads (will display thread names if format is not overwritten by other flags)
 
 ## Options - BSD style

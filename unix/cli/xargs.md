@@ -5,7 +5,7 @@ arguments.
 
 By default whitespace and newlines are used as delimeters.
 
-## Usage
+## Options
 
 * `-d <delim>` use `delim` as separator for input items
 * `-n <N>` use a max of `N` args per executed command line

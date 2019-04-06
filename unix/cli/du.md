@@ -2,11 +2,10 @@
 
 Shows how much disk space directories and files occupy. Stands for "disk usage".
 
-## Examples
+Show subdirectories and files in the current directory, from largest
+to smallest:
 
-* Subdirectories and files in the current directory, from largest to smallest
-
-  `du -hs * | sort -hr`
+`du -hs * | sort -hr`
 
 ## Options
 
