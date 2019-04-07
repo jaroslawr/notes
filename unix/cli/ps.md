@@ -2,11 +2,11 @@
 
 List all processes:
 
-`ps -efl`
+`ps -e`
 
-Show processes hierarchy:
+Show process hierarchy:
 
-`ps -eflH`
+`ps -eH`
 
 List top 5 processes by memory usage (in kbs):
 
@@ -16,13 +16,13 @@ List top 5 processes by thread count:
 
 `ps -e -O nlwp --sort -nlwp | head -n 6`
 
-Show info on specific process:
+Show full info on specific process:
 
-`ps -p 123 -fl`
+`ps -p 123 -Fl`
 
 Show info on group of processes:
 
-`ps -p $(pgrep -d, chrome) -fl`
+`ps -p $(pgrep -d, chrome) -Fl`
 
 Show threads of a process, with names:
 
