@@ -4,6 +4,10 @@ List all processes:
 
 `ps -efl`
 
+Show processes hierarchy:
+
+`ps -eflH`
+
 List top 5 processes by memory usage (in kbs):
 
 `ps -e -O rss --sort -rss | head -n 6`
@@ -39,6 +43,7 @@ Output:
 * `-l` long format (adds process state column among others)
 * `-o <columns>` specify columns to display
 * `-O <columns>` specify columns to display, preloaded with basic columns like pid and cmd
+* `-H` show process hierarchy
 * `-T` show threads (will display thread names if format is not overwritten by other flags)
 
 ## Options - BSD style
@@ -57,6 +62,7 @@ Output:
 
 ## Options - long style
 
+* `--ppid` filter by parent process pid
 * `--sort` sort by given column, `-xyz` is descending sort by xyz,
   `+xyz` is ascending
 
