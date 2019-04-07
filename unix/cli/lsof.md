@@ -15,14 +15,14 @@ lsof -i @1.2.3.4:80
 lsof -i @1.2.3.4:http
 ```
 
-Internally it processes the info exposed in `/proc/<pid>/fd/` and in
+The output is based on info from `/proc/<pid>/fd/` and
 `/proc/<pid>/fdinfo/`.
-
-Running without sudo might simply give an incomplete file list and no
-warnings.
 
 Threads are displayed by default and files inherited from the parent
 process will be shown for each thread separately.
+
+Running without sudo might simply give an incomplete file list and no
+warnings.
 
 ## Options
 
