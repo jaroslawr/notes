@@ -2,31 +2,49 @@
 
 List all processes:
 
-`ps -e`
+`ps ax`
+
+List all processes, with additional columns:
+
+`ps aux`
 
 Show process hierarchy:
 
-`ps -eH`
+`ps auxf`
 
 List top 5 processes by memory usage (in kbs):
 
-`ps -e -O rss --sort -rss | head -n 6`
+`ps ax -O rss --sort -rss | head -n 6`
 
 List top 5 processes by thread count:
 
-`ps -e -O nlwp --sort -nlwp | head -n 6`
+`ps ax -O nlwp --sort -nlwp | head -n 6`
 
-Show full info on specific process:
+Show full info on process with PID 123:
 
-`ps -p 123 -Fl`
+`ps u 123`
 
 Show info on group of processes:
 
-`ps -p $(pgrep -d, chrome) -Fl`
+`ps u $(pgrep chrome)`
 
-Show threads of a process, with names:
+Show threads of process with PID 123, with names:
 
-`ps -p 123 -T`
+`ps -T 123`
+
+## Options - BSD style
+
+Filters:
+
+* `a` from all users
+* `x` including processes without tty
+
+Output:
+
+* `u` user-oriented format (adds columns: %CPU, %MEM, RSS, start time)
+* `e` display environment
+* `h` do not display header
+* `f` display a process tree
 
 ## Options - UNIX style
 
@@ -44,21 +62,7 @@ Output:
 * `-o <columns>` specify columns to display
 * `-O <columns>` specify columns to display, preloaded with basic columns like pid and cmd
 * `-H` show process hierarchy
-* `-T` show threads (will display thread names if format is not overwritten by other flags)
-
-## Options - BSD style
-
-Filters:
-
-* `a` from all users
-* `x` including processes without tty
-
-Output:
-
-* `u` user-oriented format (display additional columns)
-* `e` display environment
-* `h` do not display header
-* `f` display a process tree
+* `-T` show threads (will display thread names if used with -p and without format flags)
 
 ## Options - long style
 
