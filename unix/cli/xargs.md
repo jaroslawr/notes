@@ -1,9 +1,8 @@
 # xargs
 
-Executes a provided command using items read from standard input as
-arguments.
+Executes command using standard input to build the argument list.
 
-By default whitespace and newlines are used as delimeters.
+By default whitespace and newlines are treated as delimeters.
 
 ## Options
 
