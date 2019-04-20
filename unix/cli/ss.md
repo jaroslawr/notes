@@ -1,6 +1,10 @@
 # ss
 
-List non-listening sockets:
+Show summary socket statistics:
+
+`ss -s`
+
+List (non-listening) sockets:
 
 `ss`
 
@@ -15,3 +19,10 @@ List connections TO given host and port:
 List connections FROM given host to given port:
 
 `ss dst xyz.net and sport = 80`
+
+## Options
+
+* `-a` list all sockets (including listening ones)
+* `-s` show summary statistics
+* `-p` show process using socket
+* `-i` show additional socket TCP information
