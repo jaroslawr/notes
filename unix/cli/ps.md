@@ -85,3 +85,4 @@ Output:
 * `rss` memory usage
 * `nlwp` number of threads
 * `stat` process state
+* `cgroup`
