@@ -29,14 +29,16 @@ warnings.
 Filters:
 
 * `-a` join criteria with AND
-* `-p <pid>` filter by pid
-* `-u <uid>` filter by uid
-* `-u <uname>` filter by username
+* `-p <pid>` filter by process id
+* `-c <cmd>` filter by process executable name
+* `-u <uid>` filter by process uid
+* `-u <uname>` filter by process username
 * `-d <fd>` filter by file descriptor number
 * `-i` only sockets
 
 Output:
 
+* `-t` only display pids
 * `-P` disable portname resolution
 * `-n` disable hostname resolution
 * `-Ts` display TCP socket state
