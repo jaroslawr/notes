@@ -1,25 +1,33 @@
 # ss
 
+Show summary socket statistics:
+
+`ss -s`
+
 List sockets:
 
 `ss`
 
-List all sockets (including listening ones):
+List all sockets, including listening ones :
 
 `ss -a`
 
-List connections TO given host and port, including owner process:
+List sockets along with associated processes:
 
-`ss -p dst xyz.net and dport = 443`
+`ss -p`
 
-List connections FROM given host to given port, including owner
-process:
+List connections FROM given host to given port:
 
-`ss -p dst xyz.net and sport = 80`
+`ss dst xyz.net sport 443`
 
-Show summary socket statistics:
+List connections TO given host and port:
 
-`ss -s`
+`ss dst xyz.net dport 8080`
+
+List connections TO given subnet and port, in state ESTABLISHED (state
+filter always has to come first):
+
+`ss state ESTABLISHED dst 192.168.1/24 dport 8080`
 
 ## Options
 
