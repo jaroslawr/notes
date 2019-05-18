@@ -18,16 +18,16 @@ List sockets along with associated processes:
 
 List connections FROM given host to given port:
 
-`ss dst xyz.net sport 443`
+`ss dst xyz.net sport = 443`
 
 List connections TO given host and port:
 
-`ss dst xyz.net dport 8080`
+`ss dst xyz.net dport = 8080`
 
 List connections TO given subnet and port, in state ESTABLISHED (state
 filter always has to come first):
 
-`ss state ESTABLISHED dst 192.168.1/24 dport 8080`
+`ss state ESTABLISHED dst 192.168.1/24 dport = 8080`
 
 ## Options
 
