@@ -34,6 +34,6 @@ filter always has to come first):
 * `-a` list all sockets, including listening ones
 * `-s` show summary statistics
 * `-p` show process using socket
-* `-i` show TCP state information
+* `-i` show TCP socket state (e.g. total bytes sent, total bytes received)
 * `-r` show host names (resolve IPs)
 * `-n` show port numbers rather than service names
