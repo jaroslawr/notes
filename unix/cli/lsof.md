@@ -1,18 +1,50 @@
 # lsof
 
-Lists file descriptors.
+List all file descriptors:
 
 ```
 lsof
+```
+
+List file descriptors referencing `file`:
+
+```
 lsof file
+```
+
+List file descriptors referencing anything on `/mnt/data`:
+
+```
 lsof /mnt/data
-lsof -i # only sockets
+```
+
+List file descriptors of process with pid `123`:
+
+```
+lsof -p 123
+```
+
+List socket file descriptors:
+
+```
+lsof -i
+```
+
+List socket file descriptors connected to `host`:
+```
 lsof -i @host
+```
+
+List socket file descriptors connected to `host` on port 80:
+
+```
 lsof -i @host:80
-lsof -i @host:http
-lsof -i @1.2.3.4
-lsof -i @1.2.3.4:80
-lsof -i @1.2.3.4:http
+```
+
+List socket file descriptors owned by process with pid `123`:
+
+```
+lsof -a -i -p 123
 ```
 
 The output is based on info from `/proc/<pid>/fd/` and
@@ -23,6 +55,10 @@ process will be shown for each thread separately.
 
 Running without sudo might simply give an incomplete file list and no
 warnings.
+
+Disabling hostname resolution with `-n` often makes `lsof` much
+faster. Disabling portname resolution with `-P` sometimes makes output
+less confusing.
 
 ## Options
 
