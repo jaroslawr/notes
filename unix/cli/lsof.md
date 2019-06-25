@@ -56,9 +56,13 @@ process will be shown for each thread separately.
 Running without sudo might simply give an incomplete file list and no
 warnings.
 
-Disabling hostname resolution with `-n` often makes `lsof` much
-faster. Disabling portname resolution with `-P` sometimes makes output
-less confusing.
+Disabling hostname resolution with `-n` makes `lsof` much faster when
+there are lots of sockets.
+
+Disabling portname resolution with `-P` is often also helpful.
+
+Disabling username resolution with `-l` prevents UID resolution
+errors, e.g. with Docker.
 
 ## Options
 
@@ -77,4 +81,5 @@ Output:
 * `-t` only display pids
 * `-P` disable portname resolution
 * `-n` disable hostname resolution
+* `-l` disable username resolution
 * `-Ts` display TCP socket state
