@@ -25,17 +25,10 @@
   returns a file descriptor for a separate *connected socket*, which
   starts in state ESTABLISHED
   
-The length of the SYN queue for a socket is limited by
-`/proc/sys/net/ipv4/tcp_max_syn_backlog`.
-
-The length of the accept queue for a socket is limited by the
-`backlog` argument of `listen()` and by the system limit
-`/proc/sys/net/core/somaxconn`.
-  
 ### Connection start (*active open*)
 
-* Client calls `socket()`, followed by `connect()`, initiating the TCP
-  handshake
+* Client calls `socket()`, followed by `connect()`, kernel picks
+  ephemeral port for the connection, TCP handshake is initiated
 
 * TCP SYN segment is sent to the server, clients socket enters the
   SYN-SENT state
@@ -79,3 +72,18 @@ data: read()/write(), recv()/send() or recvmsg()/sendmsg()
   socket enters the LAST-ACK state
 
 * ACK is received from the peer, socket gets closed
+
+## Limits
+
+* `sysctl net.ipv4.ip_local_port_range` - ephemeral port range for
+making outgoing connections, effectively a limit on the number of
+connections to a single destination IP address and port
+
+* `sysctl net.ipv4.tcp_max_syn_backlog` - maximum length of the SYN
+  queue for a single socket
+
+* `sysctl net.core.somaxconn` - maximum length of the accept queue for
+a single socket
+
+* `backlog` argument of `listen()` - maximum length of the accept
+queue for a single socket (capped at `somaxconn`)
