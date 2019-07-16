@@ -1,10 +1,11 @@
 # ss
 
-List all sockets, except listening ones:
+List sockets (in states other than `LISTEN`, `TIME-WAIT` or
+`SYN-RECV`):
 
 `ss`
 
-List all sockets, including listening ones :
+List all sockets:
 
 `ss -a`
 
@@ -41,7 +42,7 @@ Some information will only be shown correctly when running as root.
 
 ## Options
 
-* `-a` list all sockets, including listening ones
+* `-a` list all sockets
 * `-l` list only listening sockets
 * `-t` list only TCP sockets
 * `-u` list only UDP sockets
