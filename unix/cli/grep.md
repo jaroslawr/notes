@@ -1,19 +1,34 @@
 # grep
 
+Search for pattern in stdin:
+
+`grep pattern`
+
+Search for pattern recursively in current directory:
+
+`grep -R pattern`
+
+Search for pattern recursively in given directory:
+
+`grep -R pattern dir`
+
+Serach stdin for one of the patterns from patfile:
+
+`grep -f patfile`
+
 ## Options
 
 Patterns:
 
-* `-e <pattern>` match `pattern`, can be supplied multiple times to
-  search for all patterns
-* `-E` interpret `pattern` as ERE (Extended Regular Expression)
-* `-F` interpret `pattern` as a literal
-* `-P` interpret `pattern` as Perl regular expression
+* `-e <pattern>` supply multiple times to match on one of multiple patterns
 * `-f <file>` read patterns from `file`
-* `-i` ignore case
-* `-w` search for whole words
+* `-F` interpret `<pattern>` as a literal
+* `-E` interpret `<pattern>` as an ERE (Extended Regular Expression)
+* `-P` interpret `<pattern>` as Perl regular expression
 * `-x` search for whole lines
+* `-w` search for whole words
 * `-v` search for non-matches
+* `-i` ignore case
 
 Mode:
 
