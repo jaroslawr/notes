@@ -1,9 +1,43 @@
 # uniq
 
-Examines adjacent lines for duplicates. By default, after every line
-printed, it skips all adjacent identical lines.
+Examines adjacent lines for duplicates. Sorting the input first is
+often useful.
 
-Presorting of the input might be useful for some applications.
+Print those lines from stdin which are not duplicating the preceding
+line:
+
+`uniq`
+
+Like above, but precede each line by the number of its occurences in
+the original stream:
+
+`uniq -c`
+
+Print those lines from stdin which are not followed by any adjacent
+duplicates:
+
+`uniq -u`
+
+Print those lines from stdin which are followed by adjacent duplicates:
+
+`uniq -d`
+
+Print those lines from stdin which are followed by adjacent duplicates,
+along with the duplicates themselves:
+
+`uniq -D`
+
+Set union (a ∪ b):
+
+`sort a b | uniq`
+
+Set intersection (a ∩ b):
+
+`sort a b | uniq -d`
+
+Set difference (a ∖ b):
+
+`sort a b b | uniq`
 
 ## Options
 
