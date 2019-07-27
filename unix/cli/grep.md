@@ -1,26 +1,34 @@
 # grep
 
-Search for pattern in stdin:
+Search stdin for lines matching pattern:
 
 `grep pattern`
 
-Search for pattern recursively in current directory:
+Search stdin for lines matching pattern or pattern2:
 
-`grep -R pattern`
+`grep -e pattern -e pattern2`
 
-Search for pattern recursively in given directory:
-
-`grep -R pattern dir`
-
-Serach stdin for one of the patterns from patfile:
+Serach stdin for lines matching any of the patterns from patfile:
 
 `grep -f patfile`
+
+Recursively search current directory for lines matching pattern:
+
+`grep -r pattern`
+
+Recursively search dir for lines matching pattern:
+
+`grep -r pattern dir`
+
+List files in dir matching pattern:
+
+`grep -rl pattern dir`
 
 ## Options
 
 Patterns:
 
-* `-e <pattern>` supply multiple times to match on one of multiple patterns
+* `-e <pattern>` supply multiple times to match any of multiple patterns
 * `-f <file>` read patterns from `file`
 * `-F` interpret `<pattern>` as a literal
 * `-E` interpret `<pattern>` as an ERE (Extended Regular Expression)
@@ -35,6 +43,7 @@ Mode:
 * `-c` count occurences
 * `-l` list files matching pattern
 * `-L` list files NOT matching pattern
+* `-q` no output, exit with 0 status on first match
 
 Display:
 
@@ -43,5 +52,6 @@ Display:
 
 Directory traversal:
 
-* `-R` recursive search
+* `-r` recursive search
+* `-R` recursive search which also follows symlinks
 * `-I` ignore binary files (in recursive search)
