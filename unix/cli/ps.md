@@ -6,11 +6,15 @@ List all processes:
 
 List all processes, with additional columns:
 
-`ps aux`
+`ps axu`
+
+List processes matching pattern, keep header:
+
+`ps axu | awk 'NR==1 || /chrome/'`
 
 Show process hierarchy:
 
-`ps auxf`
+`ps axuf`
 
 List top 5 processes by memory usage (in kbs):
 
@@ -22,15 +26,15 @@ List top 5 processes by thread count:
 
 Show full info on process with PID 123:
 
-`ps u 123`
+`ps -p 123 u`
 
 Show info on group of processes:
 
-`ps u $(pgrep chrome)`
+`ps -p $(pgrep -d, chrome) u`
 
 Show threads of process with PID 123, with names:
 
-`ps -T 123`
+`ps -p 123 -T`
 
 ## Options - BSD style
 
