@@ -1,7 +1,8 @@
 # sort
 
 Sorts all lines from all files and writes the result to standard
-output.
+output. It uses an external merge sort algorithm, so it can sort files
+larger than the amount of available memory.
 
 Sort in ascending dictionary order:
 
