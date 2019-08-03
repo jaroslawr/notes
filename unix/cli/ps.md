@@ -26,11 +26,11 @@ List top 5 processes by thread count:
 
 Show full info on process with PID 123:
 
-`ps -p 123 u`
+`ps u -p 123`
 
 Show info on group of processes:
 
-`ps -p $(pgrep -d, chrome) u`
+`ps u -p $(pgrep -d, chrome)`
 
 Show threads of process with PID 123, with names:
 
