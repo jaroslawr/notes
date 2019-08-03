@@ -1,6 +1,6 @@
 # sed
 
-Prefix each input line with a prefix:
+Prefix each input line:
 
 `sed 's/^/prefix /`
 
