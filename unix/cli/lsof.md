@@ -15,7 +15,7 @@ lsof file
 List file descriptors referencing anything on `/mnt/data`:
 
 ```
-lsof /mnt/data
+lsof +D /mnt/data
 ```
 
 List file descriptors of process with pid `123`:
