@@ -2,12 +2,19 @@
 
 Shows how much disk space directories and files occupy. Stands for "disk usage".
 
-Show subdirectories and files in the current directory, from largest
-to smallest:
+Show disk space used by subdirectories and files in the current
+directory, sorted:
 
-`du -hs * | sort -hr`
+`du -ah -d1 | sort -rh`
+
+Show inode count used by subdirectories of the current directory,
+sorted:
+
+`du --inodes -d1 | sort -rn`
 
 ## Options
 
-* `-s` show total size of each argument
-* `-h` human readable units instead of raw bytes
+* `-a` also show sizes for files
+* `-h` use human readable units instead of raw bytes
+* `-d <depth>` print total for each directory or file at or below `depth`
+* `--inodes` show used inode count instead of disk space
