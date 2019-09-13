@@ -12,10 +12,11 @@ List file descriptors referencing `file`:
 lsof file
 ```
 
-List file descriptors referencing anything on `/mnt/data`:
+List file descriptors referencing anything on `/mnt/data`, possibly
+crossing different filesystems and following symlinks:
 
 ```
-lsof +D /mnt/data
+lsof +D /mnt/data -x
 ```
 
 List file descriptors of process with pid `123`:
@@ -74,6 +75,8 @@ Filters:
 * `-u <uid>` filter by process uid
 * `-u <uname>` filter by process username
 * `-d <fd>` filter by file descriptor number
+* `+D <path>` files that are anywhere below `path`
+* `-x` with `+D`, cross filesystem boundaries and follow symbolic links
 * `-i` only sockets
 
 Output:
