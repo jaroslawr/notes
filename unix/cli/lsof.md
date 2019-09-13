@@ -16,7 +16,7 @@ List file descriptors referencing anything on `/mnt/data`, possibly
 crossing different filesystems and following symlinks:
 
 ```
-lsof +D /mnt/data -x
+lsof +D /var/data -x
 ```
 
 List file descriptors of process with pid `123`:
