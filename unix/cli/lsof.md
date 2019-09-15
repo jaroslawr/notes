@@ -75,7 +75,7 @@ Filters:
 * `-u <uid>` filter by process uid
 * `-u <uname>` filter by process username
 * `-d <fd>` filter by file descriptor number
-* `+D <path>` files that are anywhere below `path`
+* `+D <path>` filter by file path prefix
 * `-x` with `+D`, cross filesystem boundaries and follow symbolic links
 * `-i` only sockets
 

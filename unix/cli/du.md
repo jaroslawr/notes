@@ -16,5 +16,5 @@ sorted:
 
 * `-a` also show sizes for files
 * `-h` use human readable units instead of raw bytes
-* `-d <depth>` print total for each directory or file at or below `depth`
+* `-d <depth>` print total for each directory (with `-a` also for each file) at `depth`, recursively counting in all child directories and files
 * `--inodes` show used inode count instead of disk space
