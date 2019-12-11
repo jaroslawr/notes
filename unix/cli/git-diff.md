@@ -1,12 +1,16 @@
 # git diff
 
-Show unstaged changes to the working tree:
+Show unstaged changes:
 
 `git diff`
 
-Show staged changes to the working tree:
+Show staged changes:
 
 `git diff --staged`
+
+Show both unstaged and staged changes:
+
+`git diff HEAD`
 
 Show changes between two arbitrary commits:
 
