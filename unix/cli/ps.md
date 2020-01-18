@@ -8,6 +8,10 @@ List all processes, with additional columns:
 
 `ps axu`
 
+List all pids, skip header line:
+
+`ps axh -o pid`
+
 List processes matching pattern, keep header:
 
 `ps axu | awk 'NR==1 || /chrome/'`
