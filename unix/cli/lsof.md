@@ -1,15 +1,15 @@
 # lsof
 
-List all file descriptors:
-
-```
-lsof
-```
-
 List file descriptors referencing `file`:
 
 ```
 lsof file
+```
+
+List pids of processes that have `file` open:
+
+```
+lsof -t file
 ```
 
 List file descriptors referencing anything on `/mnt/data`, possibly
