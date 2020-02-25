@@ -4,39 +4,38 @@
 
 ### Server startup (*passive open*)
 
-* Server calls `socket()`, which returns a file descriptor for a new
-  socket
+  - Server calls `socket()`, which returns a file descriptor for a new socket
 
-* Server calls `bind()`, assigns hostname and port to the socket
+  - Server calls `bind()`, assigns hostname and port to the socket
 
-* Server calls `listen()`, turning the socket into a *listening
-  socket*, in LISTEN state
+  - Server calls `listen()`, turning the socket into a *listening socket*, in
+    LISTEN state
   
-* Server receives SYN from client, kernel places the connection in a
-  *SYN queue*, responds with SYN-ACK
+  - Server receives SYN from client, kernel places the connection in a *SYN
+    queue*, responds with SYN-ACK
   
-* Server receives the final ACK of the handshake from client, kernel
-  moves the connection from *SYN queue* to *accept queue*
+  - Server receives the final ACK of the handshake from client, kernel moves the
+    connection from *SYN queue* to *accept queue*
   
-* Server calls `accept()`, which blocks until there is a connection
-  ready in the accept queue
+  - Server calls `accept()`, which blocks until there is a connection ready in
+    the accept queue
 
-* `accept()` completes, removes a connection from front of the queue,
-  returns a file descriptor for a separate *connected socket*, which
-  starts in state ESTABLISHED
+  - `accept()` completes, removes a connection from front of the queue, returns
+    a file descriptor for a separate *connected socket*, which starts in state
+    ESTABLISHED
   
 ### Connection start (*active open*)
 
-* Client calls `socket()`, followed by `connect()`, kernel picks
-  ephemeral port for the connection, TCP handshake is initiated
+  - Client calls `socket()`, followed by `connect()`, kernel picks ephemeral
+    port for the connection, TCP handshake is initiated
 
-* TCP SYN segment is sent to the server, clients socket enters the
-  SYN-SENT state
+  - TCP SYN segment is sent to the server, clients socket enters the SYN-SENT
+    state
 
-* Server responds with SYN-ACK segment
+  - Server responds with SYN-ACK segment
 
-* Client receives SYN-ACK, `connect()` returns, client socket enters
-  ESTABLISHED state, ACK is sent back
+  - Client receives SYN-ACK, `connect()` returns, client socket enters
+    ESTABLISHED state, ACK is sent back
 
 ### Data transfer
 
@@ -47,43 +46,42 @@ data: read()/write(), recv()/send() or recvmsg()/sendmsg()
 
 *Active close* can be done by either side of the connection:
 
-* The active side calls `close()`, FIN is sent to the peer, socket
-  enters the FIN-WAIT-1 state
+  - The active side calls `close()`, FIN is sent to the peer, socket enters the
+    FIN-WAIT-1 state
   
-* Neither `send()` nor `recv()` can be done anymore, although at TCP
-  level only one end of the connection is closed and the peer can
-  still send in data
+  - Neither `send()` nor `recv()` can be done anymore, although at TCP level
+    only one end of the connection is closed and the peer can still send in data
 
-* ACK is received from the peer, socket enters the FIN-WAIT-2 state
+  - ACK is received from the peer, socket enters the FIN-WAIT-2 state
 
-* FIN is received from the peer, ACK is sent back, socket enters the
-  TIME-WAIT state
+  - FIN is received from the peer, ACK is sent back, socket enters the TIME-WAIT
+    state
 
 ### Connection termination (*passive close*)
 
-* FIN is received, socket enters the CLOSE-WAIT state
+  - FIN is received, socket enters the CLOSE-WAIT state
 
-* The passive side learns the peer has closed its part of the
-  connection on the next attempt to call `recv()`, which returns 0
+  - The passive side learns the peer has closed its part of the connection on
+    the next attempt to call `recv()`, which returns 0
   
-* The passive side can still use `send()`
+  - The passive side can still use `send()`
   
-* The passive side calls `close()`, sends its own FIN to the peer,
-  socket enters the LAST-ACK state
+  - The passive side calls `close()`, sends its own FIN to the peer, socket
+    enters the LAST-ACK state
 
-* ACK is received from the peer, socket gets closed
+  - ACK is received from the peer, socket gets closed
 
 ## Limits
 
-* `sysctl net.ipv4.ip_local_port_range` - ephemeral port range for
-making outgoing connections, effectively a limit on the number of
-connections to a single destination IP address and port
+  - `sysctl net.ipv4.ip_local_port_range` - ephemeral port range for making
+    outgoing connections, effectively a limit on the number of connections to a
+    single destination IP address and port
 
-* `sysctl net.ipv4.tcp_max_syn_backlog` - maximum length of the SYN
-  queue for a single socket
+  - `sysctl net.ipv4.tcp_max_syn_backlog` - maximum length of the SYN queue for
+    a single socket
 
-* `sysctl net.core.somaxconn` - maximum length of the accept queue for
-a single socket
+  - `sysctl net.core.somaxconn` - maximum length of the accept queue for a
+    single socket
 
-* `backlog` argument of `listen()` - maximum length of the accept
-queue for a single socket (capped at `somaxconn`)
+  - `backlog` argument of `listen()` - maximum length of the accept queue for a
+    single socket (capped at `somaxconn`)

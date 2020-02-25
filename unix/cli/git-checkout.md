@@ -2,16 +2,16 @@
 
 Create a new branch and check it out:
 
-`git checkout -b branch`
+    git checkout -b branch
 
 Checkout most recently left branch:
 
-`git checkout -`
+    git checkout -
 
 Revert individual file:
 
-`git checkout master -- src/xyz.c`
+    git checkout master -- src/xyz.c
 
 Interactively select and revert hunks in file:
 
-`git checkout -p master -- src/xyz.c`
+    git checkout -p master -- src/xyz.c

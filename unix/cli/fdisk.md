@@ -2,4 +2,4 @@
 
 ## Options
 
-* `-l` list disks and partitions
+  - `-l` list disks and partitions

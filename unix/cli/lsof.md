@@ -2,51 +2,35 @@
 
 List file descriptors referencing `file`:
 
-```
-lsof file
-```
+    lsof file
 
 List pids of processes that have `file` open:
 
-```
-lsof -t file
-```
+    lsof -t file
 
 List file descriptors referencing anything on `/mnt/data`, possibly
 crossing different filesystems and following symlinks:
 
-```
-lsof +D /var/data -x
-```
+    lsof +D /var/data -x
 
 List file descriptors of process with pid `123`:
 
-```
-lsof -p 123
-```
+    lsof -p 123
 
 List socket file descriptors:
 
-```
-lsof -i
-```
+    lsof -i
 
 List socket file descriptors connected to `host`:
-```
-lsof -i @host
-```
+    lsof -i @host
 
 List socket file descriptors connected to `host` on port 80:
 
-```
-lsof -i @host:80
-```
+    lsof -i @host:80
 
 List socket file descriptors owned by process with pid `123`:
 
-```
-lsof -a -i -p 123
-```
+    lsof -a -i -p 123
 
 The output is based on info from `/proc/<pid>/fd/` and
 `/proc/<pid>/fdinfo/`.
@@ -67,22 +51,22 @@ errors, e.g. with Docker.
 
 ## Options
 
-Filters:
+### Filters
 
-* `-a` join criteria with AND
-* `-p <pid>` filter by process id
-* `-c <cmd>` filter by process executable name
-* `-u <uid>` filter by process uid
-* `-u <uname>` filter by process username
-* `-d <fd>` filter by file descriptor number
-* `+D <path>` filter by file path prefix
-* `-x` with `+D`, cross filesystem boundaries and follow symbolic links
-* `-i` only sockets
+  - `-a` join criteria with AND
+  - `-p <pid>` filter by process id
+  - `-c <cmd>` filter by process executable name
+  - `-u <uid>` filter by process uid
+  - `-u <uname>` filter by process username
+  - `-d <fd>` filter by file descriptor number
+  - `+D <path>` filter by file path prefix
+  - `-x` with `+D`, cross filesystem boundaries and follow symbolic links
+  - `-i` only sockets
 
-Output:
+### Output
 
-* `-t` only display pids
-* `-P` disable portname resolution
-* `-n` disable hostname resolution
-* `-l` disable username resolution
-* `-Ts` display TCP socket state
+  - `-t` only display pids
+  - `-P` disable portname resolution
+  - `-n` disable hostname resolution
+  - `-l` disable username resolution
+  - `-Ts` display TCP socket state

@@ -2,12 +2,10 @@
 
 Show changes made in given commit:
 
-```
-git show # defaults to HEAD
-git show abc123
-git show abc123 -- foo.c
-git show abc123 -- bar/*.c
-```
+    git show # defaults to HEAD
+    git show abc123
+    git show abc123 -- foo.c
+    git show abc123 -- bar/*.c
 
 ## Options
 

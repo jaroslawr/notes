@@ -2,12 +2,12 @@
 
 Find installed package by name:
 
-`dpkg-query -W | grep vim`
+    dpkg-query -W | grep vim
 
 Find installed package containing file:
 
-`dpkg-query -S /usr/bin/vim.nox`
+    dpkg-query -S /usr/bin/vim.nox
 
 List files installed by package:
 
-`dpkg-query -L vim-nox`
+    dpkg-query -L vim-nox

@@ -2,16 +2,16 @@
 
 Stage new files and changes to existing ones:
 
-`git add .`
+    git add .
 
 Stage changes to existing files and deletions:
 
-`git add -u`
+    git add -u
 
 Stage all changes:
 
-`git add -A`
+    git add -A
 
 Interactively select and stage hunks from working tree:
 
-`git add -p`
+    git add -p
