@@ -19,7 +19,11 @@ Show changes between two arbitrary commits:
 All forms can be narrowed to a path or glob:
 
     git diff -- foo.c
+    git diff -- '**/foo.c'
     git diff -- 'bar/*.c'
+
+Syntax for specifying file globs is documented in `man gitglossary` under
+`pathspec`.
 
 ## Options
 
