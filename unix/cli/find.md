@@ -51,5 +51,10 @@ specified.
 
 ### Printf format strings
 
-- `%p` file name
-- `%l` symlink target, if symlink
+- `%p` file path
+- `%P` file path, with the starting point removed
+- `%f` file name
+- `%l` file symlink target, if symlink
+- `%Tc` file last modification date, in locale format
+- `%u/%g` file owner username/groupname
+- `%U/%G` file owner uid/gid
