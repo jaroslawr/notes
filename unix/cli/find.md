@@ -8,6 +8,17 @@ List files, null-separated:
 
     find . -type f -print0 | xargs -0 -n1 echo
 
+List open files of process 123:
+
+    find /proc/123/fd -printf "%p %l\n"
+
+List pids sorted by number of open files:
+
+    find /proc/ -regex "/proc/[0-9]+/fd/[0-9]+" -printf "%p\n" |
+        cut -d'/' -f3 |
+        uniq -c |
+        sort -k1,1rn
+
 If the path given to find is relative, find will also print relative
 paths, but prefixed with "./". Otherwise find will print out absolute
 paths. This is true even when using -printf.
