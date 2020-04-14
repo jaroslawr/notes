@@ -24,11 +24,11 @@ Read and print pcap file:
 
 ## Options
 
-  - `-i <interface>|any` pick network interface to use
-  - `-p` do not put interface in promiscuous mode
-  - `-w <file>` write capture to pcap file
-  - `-r <file>` read and print capture from pcap file
-  - `-c <N>` capture only N segments
-  - `-A` show payload in ascii
-  - `-X` show payload in ascii and in hex
-  - `-ttt` print delta time between segments
+- `-i <interface>|any` pick network interface to use
+- `-p` do not put interface in promiscuous mode
+- `-w <file>` write capture to pcap file
+- `-r <file>` read and print capture from pcap file
+- `-c <N>` capture only N segments
+- `-A` show payload in ascii
+- `-X` show payload in ascii and in hex
+- `-ttt` print delta time between segments

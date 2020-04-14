@@ -22,6 +22,6 @@ Print lines from 3 to 5 (inclusive) from input file:
 
 ## Options
 
-  - `-E` extended regexps
-  - `-i` edit files in place
-  - `-n` do not print lines automatically
+- `-E` extended regexps
+- `-i` edit files in place
+- `-n` do not print lines automatically

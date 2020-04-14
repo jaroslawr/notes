@@ -34,30 +34,30 @@ for counts etc.
 
 ### Patterns
 
-  - `-e <pattern>` supply multiple times to match any of multiple patterns
-  - `-f <file>` read patterns from `file`
-  - `-F` interpret `<pattern>` as a literal
-  - `-E` interpret `<pattern>` as an ERE (Extended Regular Expression)
-  - `-P` interpret `<pattern>` as Perl regular expression
-  - `-x` search for whole lines
-  - `-w` search for whole words
-  - `-v` search for non-matches
-  - `-i` ignore case
+- `-e <pattern>` supply multiple times to match any of multiple patterns
+- `-f <file>` read patterns from `file`
+- `-F` interpret `<pattern>` as a literal
+- `-E` interpret `<pattern>` as an ERE (Extended Regular Expression)
+- `-P` interpret `<pattern>` as Perl regular expression
+- `-x` search for whole lines
+- `-w` search for whole words
+- `-v` search for non-matches
+- `-i` ignore case
 
 ### Mode
 
-  - `-c` count occurences
-  - `-l` list files matching pattern
-  - `-L` list files NOT matching pattern
-  - `-q` no output, exit with 0 status on first match
+- `-c` count occurences
+- `-l` list files matching pattern
+- `-L` list files NOT matching pattern
+- `-q` no output, exit with 0 status on first match
 
 ### Display
 
-  - `-n` show line number on matches
-  - `-o` only show matching parts of line
+- `-n` show line number on matches
+- `-o` only show matching parts of line
 
 ### Directory traversal
 
-  - `-r` recursive search
-  - `-R` recursive search which also follows symlinks
-  - `-I` ignore binary files (in recursive search)
+- `-r` recursive search
+- `-R` recursive search which also follows symlinks
+- `-I` ignore binary files (in recursive search)

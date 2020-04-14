@@ -27,7 +27,7 @@ Syntax for specifying file globs is documented in `man gitglossary` under
 
 ## Options
 
-  - `--name-only` show only names of changed files
-  - `--stat` show only a summary of the changes (list of modified files,
-    number of lines added/removed etc.)
-  - `-w` ignore whitespace changes in diff
+- `--name-only` show only names of changed files
+- `--stat` show only a summary of the changes (list of modified files, number of
+  lines added/removed etc.)
+- `-w` ignore whitespace changes in diff

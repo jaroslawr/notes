@@ -24,8 +24,8 @@ info):
 
 ## Options
 
-  - `-a` show command line arguments
-  - `-p` show pids
-  - `-T` exclude threads
-  - `-N [nstype]` show separate tree for each `nstype` namespace
-  (`nstype` is one of `pid`, `mnt`, `net`, `user`, `ipc`, `uts`)
+- `-a` show command line arguments
+- `-p` show pids
+- `-T` exclude threads
+- `-N [nstype]` show separate tree for each `nstype` namespace (`nstype` is one
+  of `pid`, `mnt`, `net`, `user`, `ipc`, `uts`)

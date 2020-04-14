@@ -34,4 +34,4 @@ Transition from non-blank to blank character is the default field separator.
 
 ## Options
 
-  - `-t <c>` use `c` as field separator
+- `-t <c>` use `c` as field separator

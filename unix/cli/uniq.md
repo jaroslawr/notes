@@ -41,7 +41,7 @@ Set difference (a ∖ b):
 
 ## Options
 
-  - `-u` prints a line only if there are no adjacent duplicate lines
-  - `-d` prints a line only if it has adjacent duplicate lines
-  - `-D` like `-d`, but also prints all the adjacent duplicates
-  - `-c` prefix each line by number of its occurences
+- `-u` prints a line only if there are no adjacent duplicate lines
+- `-d` prints a line only if it has adjacent duplicate lines
+- `-D` like `-d`, but also prints all the adjacent duplicates
+- `-c` prefix each line by number of its occurences

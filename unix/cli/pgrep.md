@@ -19,11 +19,11 @@ The pattern is an Extended Regular Expression, like in `sed -E` and
 
 ### Matching
 
-  - `-f` match pattern against full command line
-  - `-x` only exact matches
+- `-f` match pattern against full command line
+- `-x` only exact matches
 
 ### Output
 
-  - `-a` show full command line in output
-  - `-d <delim>` use `delim` as pid separator in output
-  - `-c` count processes instead of listing them
+- `-a` show full command line in output
+- `-d <delim>` use `delim` as pid separator in output
+- `-c` count processes instead of listing them

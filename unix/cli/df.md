@@ -17,6 +17,6 @@ Show free inodes on all mounted filesystems:
 
 ## Options
 
-  - `-T` add filesystem type column
-  - `-h` use human-readable units
-  - `-i` show information on inodes instead of on disk space
+- `-T` add filesystem type column
+- `-h` use human-readable units
+- `-i` show information on inodes instead of on disk space

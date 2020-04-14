@@ -22,6 +22,7 @@ List socket file descriptors:
     lsof -i
 
 List socket file descriptors connected to `host`:
+
     lsof -i @host
 
 List socket file descriptors connected to `host` on port 80:
@@ -53,20 +54,20 @@ errors, e.g. with Docker.
 
 ### Filters
 
-  - `-a` join criteria with AND
-  - `-p <pid>` filter by process id
-  - `-c <cmd>` filter by process executable name
-  - `-u <uid>` filter by process uid
-  - `-u <uname>` filter by process username
-  - `-d <fd>` filter by file descriptor number
-  - `+D <path>` filter by file path prefix
-  - `-x` with `+D`, cross filesystem boundaries and follow symbolic links
-  - `-i` only sockets
+- `-a` join criteria with AND
+- `-p <pid>` filter by process id
+- `-c <cmd>` filter by process executable name
+- `-u <uid>` filter by process uid
+- `-u <uname>` filter by process username
+- `-d <fd>` filter by file descriptor number
+- `+D <path>` filter by file path prefix
+- `-x` with `+D`, cross filesystem boundaries and follow symbolic links
+- `-i` only sockets
 
 ### Output
 
-  - `-t` only display pids
-  - `-P` disable portname resolution
-  - `-n` disable hostname resolution
-  - `-l` disable username resolution
-  - `-Ts` display TCP socket state
+- `-t` only display pids
+- `-P` disable portname resolution
+- `-n` disable hostname resolution
+- `-l` disable username resolution
+- `-Ts` display TCP socket state

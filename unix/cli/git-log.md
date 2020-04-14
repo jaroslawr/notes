@@ -24,7 +24,7 @@ Syntax for specifying file globs is documented in `man gitglossary` under
 
 ## Options
 
-  - `-F` interpret any search patterns used as literals
-  - `-E` interpret any search patterns used as POSIX extended regexes
-  - `-P` interpret any search patterns used as Perl regular expressions
-  - `-i` ignore case in any search patterns used
+- `-F` interpret any search patterns used as literals
+- `-E` interpret any search patterns used as POSIX extended regexes
+- `-P` interpret any search patterns used as Perl regular expressions
+- `-i` ignore case in any search patterns used
