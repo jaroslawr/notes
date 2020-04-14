@@ -8,10 +8,10 @@ Checkout most recently left branch:
 
     git checkout -
 
-Revert individual file:
+Discard all changes to xyz.c, restoring contents from index:
 
-    git checkout master -- src/xyz.c
+    git checkout -- src/xyz.c
 
-Interactively select and revert hunks in file:
+Discard selected changes to xyz.c interactively, restoring contents from index:
 
-    git checkout -p master -- src/xyz.c
+    git checkout -p -- src/xyz.c
