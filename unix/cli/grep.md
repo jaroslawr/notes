@@ -25,8 +25,8 @@ List files in dir matching pattern:
     grep -rl pattern dir
 
 `pattern` is a POSIX Basic Regular Expression by default, with `.` matching any
-character, with `\(` and `\)` for grouping, `\|` for alternative `\{` and `\}`
-for counts etc.
+character, with `\(` and `\)` for grouping, `\|` for alternative, with `\{` and
+`\}` for counts etc.
 
 `pattern` might need to be quoted to prevent shell expansion.
 
