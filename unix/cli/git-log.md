@@ -16,8 +16,20 @@ Search for commits with changes adding or removing `pattern`:
 
     git log -Spattern
 
-Regex syntax is POSIX basic by default, but can be changed with grep-like
-options `-F`, `-E`, `-P`, `-i`, etc.
+Show commits since a given fixed date:
+
+    git log --since=2020-01-01
+
+Show commits since a given time period:
+
+    git log --since="1 month ago"
+
+Show commits between two dates:
+
+    git log --since=2020-01-01 --until=2020-01-31
+
+Like in grep, patterns by default are interpreted as POSIX basic regular
+expressions, but this can be changed with options: `-F`, `-E`, `-P`, `-i`.
 
 Syntax for specifying file globs is documented in `man gitglossary` under
 `pathspec`.
