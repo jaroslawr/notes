@@ -14,7 +14,16 @@ Show directory info:
 
 ## Options
 
+### Formatting
+
 - `-l` long listing format (one file per line)
 - `-h` human-readable units
+
+### Sorting
+
+- `-S` sort by file size, largest file first
 - `-t` sort by modification date, most recent first
-- `-d` list any directories given as args, not their contents
+
+### Others
+
+- `-d` list any directory arguments as files, instead of listing their contents
