@@ -8,7 +8,7 @@ Search stdin for lines matching pattern or pattern2:
 
     grep -e pattern -e pattern2
 
-Serach stdin for lines matching any of the patterns from patfile:
+Search stdin for lines matching any of the patterns from patfile:
 
     grep -f patfile
 
