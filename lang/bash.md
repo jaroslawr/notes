@@ -1,8 +1,71 @@
 # bash
 
-## Parsing
+## Variables and variable scope
 
-### Order of expansions
+## Control structures
+
+### Conditionals
+
+- `[[]]` is non-POSIX. Contents of `[[]]` have their own specific parsing rules,
+  for example they do not undergo word splitting. `[[]]` also has extra features
+  compared to regular `[]` like regex matching.
+
+- `[]` is POSIX, uses `test` builtin to do the testing. Contents of `[]` are
+  parsed like a regular command invocation.
+
+- `(())` is non-POSIX, does arithmetic tests.
+
+#### `[[]]` tests
+
+#### `[]` tests
+
+#### `(())` tests
+
+### for x in y loops
+
+for x in y expands y like command line arguments and makes x assume the value of
+each individual argument in turn. 
+
+### while read loops
+
+<https://stackoverflow.com/questions/2746553/read-values-into-a-shell-variable-from-a-pipe>
+
+### Looping over files
+
+With a for loop:
+
+    for f in ./*; do
+       [command] "$f"
+    done
+
+The `./` in the `./\*` glob prevents filenames starting with `-` to be
+interpreted as options (since they will be expanded as `./-something`). The
+`"` in `"$f"` prevent word splitting from acting on the file name.
+
+`find` and a `while read` loop give more control over which files to process:
+
+    find . -print0 | while IFS= read -r -d'' file; do
+        mv "$file" "$file.bak"
+    done
+
+`-print0` makes find delimit the file names with a null byte. `-d ''` argument
+to read causes null byte to be used as record separator, and setting a blank IFS
+makes sure that the record is not word-split - whole file name ends up in `file`
+variable.
+
+## Functions
+
+POSIX way of defining functions is:
+
+    do_thing() { ... }
+
+Bash additionally permits:
+
+    function do_thing() { .... }
+
+Function arguments are accessed as `$1`, `$2`, ...
+
+## Expansions
 
 Bash processes input by performing the following expansions in the order listed:
 - brace expansion
@@ -37,71 +100,6 @@ The IFS variable controls how raw input string will be split into separate
 arguments.
 
 By default IFS includes newline, tab and space.
-
-## Variables and variable scope
-
-## Control structures
-
-### for x in y loops
-
-for x in y expands y like command line arguments and makes x assume the value of
-each individual argument in turn. 
-
-### while read loops
-
-<https://stackoverflow.com/questions/2746553/read-values-into-a-shell-variable-from-a-pipe>
-
-### Looping over files
-
-With a for loop:
-
-    for f in ./*; do
-       [command] "$f"
-    done
-
-The `./` in the `./\*` glob prevents filenames starting with `-` to be
-interpreted as options (since they will be expanded as `./-something`). The
-`"` in `"$f"` prevent word splitting from acting on the file name.
-
-`find` and a `while read` loop give more control over which files to process:
-
-    find . -print0 | while IFS= read -r -d'' file; do
-        mv "$file" "$file.bak"
-    done
-
-`-print0` makes find delimit the file names with a null byte. `-d ''` argument
-to read causes null byte to be used as record separator, and setting a blank IFS
-makes sure that the record is not word-split - whole file name ends up in `file`
-variable.
-
-## Tests
-
-- `[[]]` is non-POSIX. Contents of `[[]]` have their own specific parsing rules,
-  for example they do not undergo word splitting. `[[]]` also has extra features
-  compared to regular `[]` like regex matching.
-
-- `[]` is POSIX, uses `test` builtin to do the testing. Contents of `[]` are
-  parsed like a regular command invocation.
-
-- `(())` is non-POSIX, does arithmetic tests.
-
-### `[[]]` tests
-
-### `[]` tests
-
-### `(())` tests
-
-## Functions
-
-POSIX way of defining functions is:
-
-    do_thing() { ... }
-
-Bash additionally permits:
-
-    function do_thing() { .... }
-
-Function arguments are accessed as `$1`, `$2`, ...
 
 ## Subshells
 
