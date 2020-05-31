@@ -4,7 +4,7 @@
 
 ### Order of expansions
 
-The order of expansions:
+Bash processes input by performing the following expansions in the order listed:
 - brace expansion
 - tilde expansion
 - parameter and variable expansion
