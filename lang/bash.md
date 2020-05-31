@@ -38,17 +38,7 @@ arguments.
 
 By default IFS includes newline, tab and space.
 
-## Functions
-
-POSIX way of defining functions is:
-
-    do_thing() { ... }
-
-Bash additionally permits:
-
-    function do_thing() { .... }
-
-Function arguments are accessed as `$1`, `$2`, ...
+## Variables and variable scope
 
 ## Control structures
 
@@ -100,6 +90,18 @@ variable.
 ### `[]` tests
 
 ### `(())` tests
+
+## Functions
+
+POSIX way of defining functions is:
+
+    do_thing() { ... }
+
+Bash additionally permits:
+
+    function do_thing() { .... }
+
+Function arguments are accessed as `$1`, `$2`, ...
 
 ## Subshells
 
