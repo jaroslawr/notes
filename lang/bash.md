@@ -2,9 +2,27 @@
 
 ## Variables and variable scope
 
+local
+declare
+typeset
+
 ## Control structures
 
 ### Conditionals
+
+The basic form of an `if` statement is this:
+
+    if command; then
+    [elif command; then]
+    [else]
+    fi
+
+0 exit code from command is considered a true value, any other exit code is
+false.
+
+#### Tests
+
+There are three different ways of doing the test part of `if` statements:
 
 - `[[]]` is non-POSIX. Contents of `[[]]` have their own specific parsing rules,
   for example they do not undergo word splitting. `[[]]` also has extra features
@@ -21,14 +39,16 @@
 
 #### `(())` tests
 
-### for x in y loops
+### Loops
+
+#### while loop
+
+#### for loop
+
+#### for x in y loops
 
 for x in y expands y like command line arguments and makes x assume the value of
-each individual argument in turn. 
-
-### while read loops
-
-<https://stackoverflow.com/questions/2746553/read-values-into-a-shell-variable-from-a-pipe>
+each individual argument in turn.
 
 ### Looping over files
 
@@ -53,6 +73,8 @@ to read causes null byte to be used as record separator, and setting a blank IFS
 makes sure that the record is not word-split - whole file name ends up in `file`
 variable.
 
+<https://stackoverflow.com/questions/2746553/read-values-into-a-shell-variable-from-a-pipe>
+
 ## Functions
 
 POSIX way of defining functions is:
@@ -63,7 +85,7 @@ Bash additionally permits:
 
     function do_thing() { .... }
 
-Function arguments are accessed as `$1`, `$2`, ...
+Function arguments are accessible as `$1`, `$2`, ...
 
 ## Expansions
 
@@ -101,11 +123,27 @@ arguments.
 
 By default IFS includes newline, tab and space.
 
+### History expansion
+
+- `!!` last command
+- `!^` first arg of last command
+- `!$` last arg of last command
+- `!:n` nth arg of last command
+- `!\*` args of last command
+
 ## Subshells
 
 ## Here documents
 
 ## Redirection of file descriptors
+
+## Builtins
+
+- `help x` - display help for `x` builtin
+- `read x` - read into variable `x`
+    - `-r` disables interpreting backslash escapes
+    - `-d` specifies the record delimiter
+    - `IFS` specifies the field delimiter
 
 ## Misc
 
@@ -116,26 +154,10 @@ By default IFS includes newline, tab and space.
 - `cd` go to home directory
 - `cd -` go to previous directory
 
-### History expansion
-
-- `!!` last command
-- `!^` first arg of last command
-- `!$` last arg of last command
-- `!:n` nth arg of last command
-- `!\*` args of last command
-
 ### Special variables
 
 - `$PWD` - current working directory
 - `$?` - exit code of last command
-
-### Builtins
-
-- `help x` - display help for `x` builtin
-- `read x` - read into variable `x`
-    - `-r` disables interpreting backslash escapes
-    - `-d` specifies the record delimiter
-    - `IFS` specifies the field delimiter
 
 ## Personal coding style
 
