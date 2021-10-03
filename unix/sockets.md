@@ -10,20 +10,27 @@
 
   - Server calls `listen()`, turning the socket into a *listening socket*, in
     LISTEN state
-  
-  - Server receives SYN from client, kernel places the connection in a *SYN
-    queue*, responds with SYN-ACK
-  
-  - Server receives the final ACK of the handshake from client, kernel moves the
-    connection from *SYN queue* to *accept queue*
-  
+
   - Server calls `accept()`, which blocks until there is a connection ready in
     the accept queue
+
+  - Server receives SYN from client, puts the connection in the
+    *SYN queue*, responds with SYN-ACK
+
+  - Server receives the final ACK of the handshake from client.
+
+    - If the *accept queue* is not full, kernel moves the connection from *SYN
+      queue* to *accept queue*.
+
+    - If *accept queue* is full, kernel ignores the ACK and eventually
+      retransmits the SYN-ACK, causing the client to resend the ACK some time
+      later and causing another attempt at putting the connection in the *accept
+      queue*.
 
   - `accept()` completes, removes a connection from front of the queue, returns
     a file descriptor for a separate *connected socket*, which starts in state
     ESTABLISHED
-  
+
 ### Connection start (*active open*)
 
   - Client calls `socket()`, followed by `connect()`, kernel picks ephemeral
@@ -48,7 +55,7 @@ data: read()/write(), recv()/send() or recvmsg()/sendmsg()
 
   - The active side calls `close()`, FIN is sent to the peer, socket enters the
     FIN-WAIT-1 state
-  
+
   - Neither `send()` nor `recv()` can be done anymore, although at TCP level
     only one end of the connection is closed and the peer can still send in data
 
@@ -63,9 +70,9 @@ data: read()/write(), recv()/send() or recvmsg()/sendmsg()
 
   - The passive side learns the peer has closed its part of the connection on
     the next attempt to call `recv()`, which returns 0
-  
+
   - The passive side can still use `send()`
-  
+
   - The passive side calls `close()`, sends its own FIN to the peer, socket
     enters the LAST-ACK state
 
