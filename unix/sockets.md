@@ -80,15 +80,34 @@ data: read()/write(), recv()/send() or recvmsg()/sendmsg()
 
 ## Limits
 
-  - `sysctl net.ipv4.ip_local_port_range` - ephemeral port range for making
+  - `fs.file-max` sysctl - system-wide limit on the number of open file descriptors
+
+      - opening a socket will fail with errno `ENFILE` if exhausted
+
+  - `fs.nr_open` sysctl - process-wide limit on the number of open file descriptors
+
+      - opening a socket will fail with errno `EMFILE` if exhausted
+
+      - the limit can be lowered by a process with `setrlimit()` and any created
+        child processes will then inherit the change
+
+      - `setrlimit()` allows to set a soft limit and a hard limit, the hard
+        limit caps the soft limit and can only be decreased, the soft limit can
+        be changed up and down and is the ultimately effective limit
+
+      - systemd, docker, PAM etc. can manipulate this, in bash it can be changed
+        with `ulimit -n`
+
+      - check effective value with `prlimit -n -p <pid>`
+
+  - `net.ipv4.ip_local_port_range` sysctl - range of ports to be used for
     outgoing connections, effectively a limit on the number of connections to a
     single destination IP address and port
 
-  - `sysctl net.ipv4.tcp_max_syn_backlog` - maximum length of the SYN queue for
-    a single socket
+  - `net.ipv4.tcp_max_syn_backlog` sysctl - length of the SYN queue for a single
+    socket
 
-  - `sysctl net.core.somaxconn` - maximum length of the accept queue for a
+  - `net.core.somaxconn` sysctl - length of the accept queue for a
     single socket
 
-  - `backlog` argument of `listen()` - maximum length of the accept queue for a
-    single socket (capped at `somaxconn`)
+      - can be lowered by supplying a `backlog` argument to `listen()`
