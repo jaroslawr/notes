@@ -20,6 +20,10 @@ Read and print pcap file:
 
     tcpdump -r capture.pcap
 
+Read pcap file, filter and write new pcap file:
+
+    tcpdump -r capture.pcap -w filtered.pcap 'net 192.168.0/24'
+
 `man pcap-filter` gives details on the network filter syntax.
 
 ## Options
