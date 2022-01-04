@@ -82,7 +82,22 @@ Active close can be initiated by either side of the connection:
 
 ## Limits
 
-### Common
+### Size of send and receive buffer (affects server-side and client-side)
+
+- If buffer size is not manually set using `setsockopt()` options
+  `SO_SNDBUF/SO_RCVBUF`, it is automatically and dynamically tuned by the kernel
+  within bounds given by the sysctls:
+
+  - for send buffer: `net.ipv4.tcp_wmem`, a vector of three integers: min,
+    default and max size in bytes
+
+  - for receive buffer: `net.ipv4.tcp_rmem`, a vector of three integers: min,
+    default and max size in bytes
+
+- If buffer size is set manually, it is limited by `net.core.wmem_max` for the
+  send buffer or by `net.core.wmem_max` for the receive buffer
+
+### Number of open file descriptors (affects server-side and client-side)
 
 - `fs.file-max` sysctl - system-wide limit on the number of open file
   descriptors
@@ -106,18 +121,20 @@ Active close can be initiated by either side of the connection:
 
     - check effective value with `prlimit -n -p <pid>`
 
-### Server side
-
-- `net.ipv4.tcp_max_syn_backlog` sysctl - length of the SYN queue for a single
-  socket
-
-- `net.core.somaxconn` sysctl - length of the accept queue for a single socket
-
-    - can be lowered by supplying a `backlog` argument to `listen()`
-
-### Client side
+### Range of possible client ports (affects client-side only)
 
 - `net.ipv4.ip_local_port_range` sysctl - range of ports to be used for outgoing
   connections, effectively a limit on the number of connections to a single
   destination IP address and port
+
+### Length of SYN queue (affects server-side only)
+
+- `net.ipv4.tcp_max_syn_backlog` sysctl - length of the SYN queue for a single
+  socket
+
+### Length of accept queue (affects server-side only)
+
+- `net.core.somaxconn` sysctl - length of the accept queue for a single socket
+
+    - can be lowered by supplying a `backlog` argument to `listen()`
 
