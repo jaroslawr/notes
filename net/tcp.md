@@ -2,20 +2,20 @@
 
 ## Handshake
 
-- Client sends segment with SYN flag, sequence number I
+- Client sends segment with SYN flag, sequence number X
 
-- Server responds with SYN+ACK, sequence number J, acknowledgement number I+1
+- Server responds with SYN+ACK, sequence number Y, acknowledgement number X+1
 
 - SYN segment announces connection settings supported by the client and SYN+ACK
   those supported by the server:
     - MSS (Maximum Segment Size)
     - Receive window size in bytes
-    - Window scale (when set to `N`, receive window size is scaled by `2**N`)
+    - Window scale (when set to N, receive window size is scaled by 2**N)
     - Support for TCP extensions
         - SACKs (Selective acknowledgments)
         - Timestamps
 
-- Client responds with ACK, acknowledgement number J+1, the connection is now
+- Client responds with ACK, acknowledgement number Y+1, the connection is now
   established on both ends
 
 ## Data transfer
@@ -24,15 +24,15 @@
 
 - Sender sends out data, starts retransmission timeout (RTO) timer
 
-    - If ACK arrives before RTO
+    - If ACK arrives before RTO:
 
-        - If unacknowledged data present, reset the RTO timer
-        - If no unacknowledged data present, disable the RTO timer
+        - If unacknowledged data is present: reset the RTO timer
+        - If no unacknowledged data is present: disable the RTO timer
 
-    - If ACK does not arrive before RTO, retransmit and increase RTO
+    - If ACK does not arrive before RTO: retransmit and increase RTO
 
-- Receiver ACKs at least every other segment or after at most 500ms (if only a
-  single segment has been received for that long)
+- Receiver ACKs at least every other segment or after at most 500ms, whatever
+  comes first (if only a single segment has been received for that long)
 
 - Receiver sends a dup-ACK (duplicate ACK) when receiving an out-of-order
   segment, re-ACKing the last byte received in-order.
@@ -42,67 +42,76 @@
 
 ### Flow control & congestion control basics
 
-- Sender can send out segments until at most min(RWND, CWND) unacknowledged
-  bytes are in flight on the wire, where RWND is the size of the *receive window*
-  and CWND the size of the *congestion window*
+Sender has two self-imposed limits (implemented by the operating system) on how
+many bytes can be sent out and unacknowledged at any given moment:
 
-- *Receive window* is a limit due to receivers finite receive buffer size
+- Receive window (`rwnd`) is a limit due to receivers necessarily finite receive
+  buffer size:
 
-    - Sender learns RWND from receiver who announces it in ACK segments
+  - Sender learns `rwnd` from receiver who announces it in ACK segments
 
-    - Modern operating systems will by default adjust it dynamically
+  - Modern operating systems will by default adjust it automatically and
+    dynamically
 
-- *Congestion window* is a limit to try to protect the network from overload
+- Congestion window (`cwnd`) is a limit to try to protect the network from
+  overload:
 
-    - CWND is only a part of the senders TCB, not announced in TCP segments
+  - `cwnd` is part of the TCB (Transmission Control Block), or simply speaking
+    part of the connection state maintained by the senders operating system, it
+    is not announced in TCP segments
 
-    - Adjusted by one of several existing congestion control algorithms
+  - `cwnd` is adjusted by one of several existing congestion control algorithms
 
-- For maximum throughput min(RWND, CWND) needs to become greater than or equal
+- For maximum throughput `min(RWND, cwnd)` needs to become greater than or equal
   to the BDP (bandwidth-delay product) of the bottleneck link of the connection:
 
-    - BDP example: datacenter
-      `10 Gbit/s * 1ms RTT = 10 Mbit = 1.25 MB`
-      In units of typical MSS:
-      `1.25 MB / 1.5kB ~ 800`
+  - BDP example: home internet  
+    `1 Gbit/s * 10ms RTT = 10 Mbit = 1.25 MB`  
+    In units of typical MSS:  
+    `1.25 MB / 1.5kB ~ 800`
 
-    - BDP example: home internet
-      `1 Gbit/s * 5ms RTT = 5 Mbit = 0.625 MB`
-      In units of typical MSS:
-      `0.625 MB / 1.5kB ~ 400`
+  - BDP example: communication inside datacenter  
+    `10 Gbit/s * 1ms RTT = 10 Mbit = 1.25 MB`  
+    In units of typical MSS:  
+    `1.25 MB / 1.5kB ~ 800`
 
-    - Requires a send buffer at least that large on the sender side
+  - BDP example: communication across datacenters (e.g. EU<->US)  
+    `5 Gbit/s * 100ms RTT = 500 Mbit = 62.5 MB`  
+    In units of typical MSS:  
+    `62.5 MB / 1.5kB ~ 42 000`
 
-    - Requires a receive buffer at least that large on the receiver side
+  - Requires send buffer at least that large on the sender side
+
+  - Requires receive buffer at least that large on the receiver side
 
 ### Flow control
 
-- If sender fills the receive buffer faster than the receiver empties it, RWND
+- If sender fills the receive buffer faster than the receiver empties it, `rwnd`
   will eventually become zero
 
-    - When RWND becomes zero, the sender launches a persist timer, that when
-      fired sends a single byte segment, a *zero-window probe*
+    - When `rwnd` becomes zero, the sender launches a persist timer, that when
+      fired sends a single byte segment, a zero-window probe
 
     - The timer fires repeatedly until an ACK segment opening the window arrives
       from the receiver
 
 ### Congestion control
 
-- One of two modes depending on the value of CWND:
+- TCP is in one of two modes depending on the value of CWND:
 
-    - when cwnd < ssthresh, slow start:
-      CWND += MSS after each ACK
+    - when `cwnd < ssthresh`, TCP is in slow start mode:  
+      `cwnd += mss` after each ACK
 
-    - when cwnd > ssthresh, congestion avoidance:
-      CWND += MSS each RTT
+    - when `cwnd > ssthresh`, TCP is in congestion avoidance mode:  
+      `cwnd += mss` each RTT
 
-    - when cwnd = ssthresh, choose either one
+    - when `cwnd = ssthresh`, implementation can choose either mode
 
-- TCP starts in slow start, ssthresh starts arbitrary high, CWND starts as a low
-  multiple of MSS (on Linux: `10*MSS`)
+- TCP starts in slow start, `ssthresh` starts arbitrary high, `cwnd` starts as a
+  low multiple of `mss` (on Linux: `10*mss`)
 
-- On RTO timeout:
-  ssthresh = max(bytes in flight / 2, 2\* sender MSS)
+- On RTO timeout:  
+  `ssthresh = max(bytes_in_flight/2, 2*sender_mss)`
 
 ## Teardown
 
@@ -120,26 +129,26 @@ Each direction of communication is closed separately
 
 ## References
 
-[rfc4614]: <https://tools.ietf.org/html/rfc4614.html>
-[rfc4614] A Roadmap for TCP Specification Documents
+- RFC 4614: A Roadmap for TCP Specification Documents  
+  <https://tools.ietf.org/html/rfc4614.html>
 
-[rfc793]: https://tools.ietf.org/html/rfc793
-[rfc793] Original TCP RFC
+- RFC 793: Original RFC for TCP  
+  <https://tools.ietf.org/html/rfc793>
 
-[rfc2581]: <https://tools.ietf.org/html/rfc2581>
-[rfc2581] TCP Congestion Control RFC
+- RFC 2581: TCP Congestion Control RFC  
+  <https://tools.ietf.org/html/rfc2581>
 
-[rfc1122]: https://tools.ietf.org/html/rfc1122
-[rfc1122] Requirements for Internet Hosts -- Communication Layers
+- RFC 1122: Requirements for Internet Hosts -- Communication Layers  
+  <https://tools.ietf.org/html/rfc1122>
 
-[rfc1123]: https://tools.ietf.org/html/rfc1123
-[rfc1123] Requirements for Internet Hosts -- Application and Support
+- RFC 1123: Requirements for Internet Hosts -- Application and Support  
+  <https://tools.ietf.org/html/rfc1123>
 
-[rfc1958]: https://tools.ietf.org/html/rfc1958
-[rfc1958] Architectural Principles of the Internet
+- RFC 1958: Architectural Principles of the Internet  
+  <https://tools.ietf.org/html/rfc1958>
 
-[rfc3439]: https://tools.ietf.org/html/rfc3439
-[rfc3439] Some Internet Architectural Guidelines and Philosophy
+- RFC 3439: Some Internet Architectural Guidelines and Philosophy  
+  <https://tools.ietf.org/html/rfc3439>
 
-[Saltzer]: http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf
-[Saltzer] End-to-end arguments in system design
+- End-to-end arguments in system design  
+  <http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf>
