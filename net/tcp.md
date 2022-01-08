@@ -42,28 +42,38 @@
 
 ### Flow control & congestion control basics
 
-Sender has two self-imposed limits (implemented by the operating system) on how
-many bytes can be sent out and unacknowledged at any given moment:
+For each direction of data flow in the TCP connection, there are two limits on
+how many bytes can be sent out and unacknowledged at any given moment, that have
+to be respected by the side that is sending the data:
 
-- Receive window (`rwnd`) is a limit due to receivers necessarily finite receive
-  buffer size:
+- Congestion window (`cwnd`) is a limit self-imposed by the sending side to try
+  to protect the network from overload:
+
+  - `cwnd` is computed and updated by the operating system of the sending side,
+    using one of several existing congestion control algorithms
+
+  - `cwnd` is not announced in TCP segments, it is part of the connection state
+    in the OS of the sending side, which is referred to in the RFC as TCB
+    (Transmission Control Block)
+
+- Receive window (`rwnd`) is the number of bytes remaining available in the
+  receivers necessarily finite receive buffer:
 
   - Sender learns `rwnd` from receiver who announces it in ACK segments
 
-  - Modern operating systems will by default adjust it automatically and
+  - Receivers operating system will typically adjust it automatically and
     dynamically
 
-- Congestion window (`cwnd`) is a limit to try to protect the network from
-  overload:
+- Sending side of the connection can send out data until `min(rwnd, cwnd)` bytes
+  are unacknowledged ("on the wire").
 
-  - `cwnd` is part of the TCB (Transmission Control Block), or simply speaking
-    part of the connection state maintained by the senders operating system, it
-    is not announced in TCP segments
+- For a single TCP connection to reach optimal bandwith, `min(rwnd, cwnd)` needs
+  to become greater than or equal to the BDP (bandwidth-delay product) of the
+  bottleneck link between sender and receiver:
 
-  - `cwnd` is adjusted by one of several existing congestion control algorithms
+  - Requires send buffer at least that large on the sending side
 
-- For maximum throughput `min(RWND, cwnd)` needs to become greater than or equal
-  to the BDP (bandwidth-delay product) of the bottleneck link of the connection:
+  - Requires receive buffer at least that large on the receiving side
 
   - BDP example: home internet  
     `1 Gbit/s * 10ms RTT = 10 Mbit = 1.25 MB`  
@@ -79,10 +89,6 @@ many bytes can be sent out and unacknowledged at any given moment:
     `5 Gbit/s * 100ms RTT = 500 Mbit = 62.5 MB`  
     In units of typical MSS:  
     `62.5 MB / 1.5kB ~ 42 000`
-
-  - Requires send buffer at least that large on the sender side
-
-  - Requires receive buffer at least that large on the receiver side
 
 ### Flow control
 
