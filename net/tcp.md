@@ -24,12 +24,17 @@
 
 - Sender sends out data, starts retransmission timeout (RTO) timer
 
-    - If ACK arrives before RTO:
+    - If ACK arrives before retransmission timeout:
 
-        - If unacknowledged data is present: reset the RTO timer
-        - If no unacknowledged data is present: disable the RTO timer
+        - If unacknowledged data is present: reset the retransmission timeout
 
-    - If ACK does not arrive before RTO: retransmit and increase RTO
+        - If no unacknowledged data is present: disable the retransmission timer
+
+    - If retransmission timeout elapses with no ACK: retransmit and start the
+      timer again but with increased timeout
+
+        - Classic TCP implementations double the timeout after each
+          retransmission (exponential backoff)
 
 - Receiver ACKs at least every other segment or after at most 500ms, whatever
   comes first (if only a single segment has been received for that long)
@@ -53,27 +58,40 @@ to be respected by the side that is sending the data:
     using one of several existing congestion control algorithms
 
   - `cwnd` is not announced in TCP segments, it is part of the connection state
-    in the OS of the sending side, which is referred to in the RFC as TCB
-    (Transmission Control Block)
+    in the OS of the sending side
+
+  - (The connection state held in the OS is sometimes referred to in RFCs as the
+    Transmission Control Block (TCB))
 
 - Receive window (`rwnd`) is the number of bytes remaining available in the
   receivers necessarily finite receive buffer:
 
   - Sender learns `rwnd` from receiver who announces it in ACK segments
 
-  - Receivers operating system will typically adjust it automatically and
-    dynamically
+  - Receivers operating system will adjust it automatically and dynamically,
+    often within some configurable bounds (!), unless socket receive buffer size
+    has been set manually
 
-- Sending side of the connection can send out data until `min(rwnd, cwnd)` bytes
-  are unacknowledged ("on the wire").
+- The overall effective window size is `W = min(rwnd, cwnd)`: sending side of
+  the connection can send out data until that many bytes are unacknowledged ("on
+  the wire") and then it should wait for ACKs.
 
-- For a single TCP connection to reach optimal bandwith, `min(rwnd, cwnd)` needs
-  to become greater than or equal to the BDP (bandwidth-delay product) of the
-  bottleneck link between sender and receiver:
+- Little's law connects the window size `W` to the maxmimum throughput possible:
+  if over some time period of observation: a) it takes `RTT` seconds on average
+  to send a bit and get the ACK for it, b) the average number of bits in flight
+  is `W` and c) no packet loss occurs, then by Little's law the throughput
+  during this time period is equal to `W/RTT` bits/s.
 
-  - Requires send buffer at least that large on the sending side
+- It follows that for a single TCP connection to reach optimal bandwidth, the
+  effective window `W = min(rwnd, cwnd)` needs to be at least equal to the BDP
+  (bandwidth-delay product) of the bottleneck link between sender and receiver:
 
-  - Requires receive buffer at least that large on the receiving side
+  - Obviously the receive buffer on the receiver side needs to be at least as
+    large, as this is what determines `rwnd`
+
+  - Send buffer on the sender side also needs to be at least that large or it
+    will cap the window size: OS needs to buffer all the data in the window so
+    it can retransmit some of the data if necessary
 
   - BDP example: home internet  
     `1 Gbit/s * 10ms RTT = 10 Mbit = 1.25 MB`  
@@ -95,8 +113,9 @@ to be respected by the side that is sending the data:
 - If sender fills the receive buffer faster than the receiver empties it, `rwnd`
   will eventually become zero
 
-    - When `rwnd` becomes zero, the sender launches a persist timer, that when
-      fired sends a single byte segment, a zero-window probe
+    - When `rwnd` becomes zero, the sender launches a persist timer, when the
+      timer fires a zero-window probe is sent: a segment carrying only a single
+      byte of data (other than the header)
 
     - The timer fires repeatedly until an ACK segment opening the window arrives
       from the receiver
@@ -116,7 +135,7 @@ to be respected by the side that is sending the data:
 - TCP starts in slow start, `ssthresh` starts arbitrary high, `cwnd` starts as a
   low multiple of `mss` (on Linux: `10*mss`)
 
-- On RTO timeout:  
+- On retransmission timeout:  
   `ssthresh = max(bytes_in_flight/2, 2*sender_mss)`
 
 ## Teardown
