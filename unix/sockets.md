@@ -84,18 +84,36 @@ Active close can be initiated by either side of the connection:
 
 ### Size of send and receive buffer (affects server-side and client-side)
 
-- If buffer size is not manually set using `setsockopt()` options
-  `SO_SNDBUF/SO_RCVBUF`, it is automatically and dynamically tuned by the kernel
-  within bounds given by the sysctls:
+- If buffer size is not manually set, it will be set automatically and
+  dynamically resized by the kernel as needed, within bounds given by sysctls:
 
-  - for send buffer: `net.ipv4.tcp_wmem`, a vector of three integers: min,
+  - For send buffer: `net.ipv4.tcp_wmem`, a vector of three integers: min,
     default and max size in bytes
 
-  - for receive buffer: `net.ipv4.tcp_rmem`, a vector of three integers: min,
+  - For receive buffer: `net.ipv4.tcp_rmem`, a vector of three integers: min,
     default and max size in bytes
+
+  - Only half of the send/receive buffer stores actual data to be sent/received,
+    the other half is reserved for internal kernel structures, so maximum
+    effective TCP window size is limited by half of the size specified in the
+    sysctls. This is described in `man 7 socket`:
+
+    > NOTES
+    >
+    > Linux assumes that half of the send/receive buffer is used for internal
+    > kernel structures; thus the values in the corresponding /proc files are
+    > twice what can be observed on the wire.
 
 - If buffer size is set manually, it is limited by `net.core.wmem_max` for the
   send buffer or by `net.core.wmem_max` for the receive buffer
+
+  - buffer size is set with `setsockopt` options `SO_SNDBUF` and `SO_RCVBUF`,
+    unlike the sysctls, the options specify only the size of the data-part of
+    the buffer, so the full buffer including the kernel structures will be twice
+    as large as specified with `setsockopt` and this doubled size is capped at
+    `net.core.wmem_max` / `net.core.rmem_max`. `getsockopt` on the other hand
+    will return the total size of the buffer, twice what was set with
+    `setsockopt`.
 
 ### Number of open file descriptors (affects server-side and client-side)
 
