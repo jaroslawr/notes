@@ -37,13 +37,14 @@
           retransmission (exponential backoff)
 
 - Receiver ACKs at least every other segment or after at most 500ms, whatever
-  comes first (if only a single segment has been received for that long)
+  comes first
 
 - Receiver sends a dup-ACK (duplicate ACK) when receiving an out-of-order
   segment, re-ACKing the last byte received in-order.
 
 - Sender monitors dup-ACKs to detect congestion and will do a *fast retransmit*
-  after enough consecutive dup-ACKs, without waiting for the RTO timer to fire
+  after enough consecutive dup-ACKs, without waiting for the retranssmision
+  timeout
 
 ### Flow control & congestion control basics
 
