@@ -76,22 +76,15 @@ to be respected by the side that is sending the data:
   the connection can send out data until that many bytes are unacknowledged ("on
   the wire") and then it should wait for ACKs.
 
-- Little's law connects the window size `W` to the maxmimum throughput possible:
-  if over some time period of observation: a) it takes `RTT` seconds on average
+- Little's law connects the window size `W` to the maxmimum throughput possible.
+  If over some time period of observation: a) it takes `RTT` seconds on average
   to send a bit and get the ACK for it, b) the average number of bits in flight
   is `W` and c) no packet loss occurs, then by Little's law the throughput
   during this time period is equal to `W/RTT` bits/s.
 
 - It follows that for a single TCP connection to reach optimal bandwidth, the
-  effective window `W = min(rwnd, cwnd)` needs to be at least equal to the BDP
+  effective window `W = min(rwnd, cwnd)` needs to get at least equal to the BDP
   (bandwidth-delay product) of the bottleneck link between sender and receiver:
-
-  - Obviously the receive buffer on the receiver side needs to be at least as
-    large, as this is what determines `rwnd`
-
-  - Send buffer on the sender side also needs to be at least that large or it
-    will cap the window size: OS needs to buffer all the data in the window so
-    it can retransmit some of the data if necessary
 
   - BDP example: home internet  
     `1 Gbit/s * 10ms RTT = 10 Mbit = 1.25 MB`  
@@ -108,17 +101,27 @@ to be respected by the side that is sending the data:
     In units of typical MSS:  
     `62.5 MB / 1.5kB ~ 42 000`
 
+- Conditions necessary for `W` to able to grow to BDP:
+
+  - Send buffer on the sender side needs to be at least as large as BDP: OS
+    needs to buffer all the data in the window so it can retransmit some of the
+    data if necessary
+
+  - Receive buffer on the receiver side needs to be at least as large as BDP so
+    that `rwnd` is not lower than `cwnd`
+
 ### Flow control
 
 - If sender fills the receive buffer faster than the receiver empties it, `rwnd`
   will eventually become zero
 
     - When `rwnd` becomes zero, the sender launches a persist timer, when the
-      timer fires a zero-window probe is sent: a segment carrying only a single
-      byte of data (other than the header)
+      persist timeout elapses a zero-window probe is sent: a segment carrying
+      only a single byte of payload
 
-    - The timer fires repeatedly until an ACK segment opening the window arrives
-      from the receiver
+    - The timer is repeatedly installed with increasing timeout until an ACK
+      segment opening the window arrives from the receiver, similarly to the
+      retransmission timer
 
 ### Congestion control
 
