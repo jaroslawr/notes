@@ -68,10 +68,6 @@ to be respected by the side that is sending the data:
 
   - Sender learns `rwnd` from receiver who announces it in ACK segments
 
-  - Receivers operating system will adjust it automatically and dynamically,
-    often within some configurable bounds (!), unless socket receive buffer size
-    has been set manually
-
 - The overall effective window size is `W = min(rwnd, cwnd)`: sending side of
   the connection can send out data until that many bytes are unacknowledged ("on
   the wire") and then it should wait for ACKs.
@@ -108,7 +104,11 @@ to be respected by the side that is sending the data:
     data if necessary
 
   - Receive buffer on the receiver side needs to be at least as large as BDP so
-    that `rwnd` is not lower than `cwnd`
+    that `rwnd` is never lower than `cwnd`
+
+  - Modern operating systems can automatically grow and shrink both the send and
+    the receive buffer but typically this happens within some configurable
+    bounds that might not be optimal
 
 ### Flow control
 
