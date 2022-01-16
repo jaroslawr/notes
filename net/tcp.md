@@ -26,15 +26,16 @@
 
     - If ACK arrives before retransmission timeout:
 
-        - If unacknowledged data is present: reset the retransmission timeout
+      - If unacknowledged data is present: reset the retransmission timeout
 
-        - If no unacknowledged data is present: disable the retransmission timer
+      - If no unacknowledged data is present: disable the retransmission timer
 
-    - If retransmission timeout elapses with no ACK: retransmit and start the
-      timer again but with increased timeout
+    - If ACK does not arrive before retransmission timeout:
 
-        - Classic TCP implementations double the timeout after each
-          retransmission (exponential backoff)
+      - Retransmit and start the timer again with increased timeout
+
+      - Classic TCP implementations double the timeout after each retransmission
+        (exponential backoff)
 
 - Receiver ACKs at least every other segment or after at most 500ms, whatever
   comes first
@@ -43,41 +44,45 @@
   segment, re-ACKing the last byte received in-order.
 
 - Sender monitors dup-ACKs to detect congestion and will do a *fast retransmit*
-  after enough consecutive dup-ACKs, without waiting for the retranssmision
+  after three consecutive dup-ACKs, without waiting for the retranssmision
   timeout
 
 ### Flow control & congestion control basics
 
-For each direction of data flow in the TCP connection, there are two limits on
-how many bytes can be sent out and unacknowledged at any given moment, that have
-to be respected by the side that is sending the data:
+- For each direction of data flow in the TCP connection, there are two limits on
+  how many bytes can be sent out and unacknowledged at any given moment, that
+  have to should be respected by the side that is sending the data:
 
-- Congestion window (`cwnd`) is a limit self-imposed by the sending side to try
-  to protect the network from overload:
+  - Congestion window (`cwnd`) attempts to protect the network from overload:
 
-  - `cwnd` is computed and updated by the operating system of the sending side,
-    using one of several existing congestion control algorithms
+    - `cwnd` is computed and updated by the operating system of the sending
+      side, using one of several existing congestion control algorithms
 
-  - `cwnd` is not announced in TCP segments, it is part of the connection state
-    in the OS of the sending side
+    - `cwnd` is not announced in TCP segments, it is part of the connection
+      state in the OS of the sending side
 
-  - (The connection state held in the OS is sometimes referred to in RFCs as the
-    Transmission Control Block (TCB))
+    - (The connection state held in the OS is sometimes referred to in RFCs as
+      the Transmission Control Block (TCB))
 
-- Receive window (`rwnd`) is the number of bytes remaining available in the
-  receivers necessarily finite receive buffer:
+  - Receive window (`rwnd`) makes sure no more data is sent than the receiver is
+    capable of buffering:
 
-  - Sender learns `rwnd` from receiver who announces it in ACK segments
+    - `rwnd` is the number of bytes remaining available in the receivers socket
+      buffer
+
+    - `rwnd` is announced by the receiver in ACK segments
 
 - The overall effective window size is `W = min(rwnd, cwnd)`: sending side of
   the connection can send out data until that many bytes are unacknowledged ("on
   the wire") and then it should wait for ACKs.
 
-- Little's law connects the window size `W` to the maxmimum throughput possible.
+- Little's law relates the effective window size to maximum possible throughput:
   If over some time period of observation: a) it takes `RTT` seconds on average
   to send a bit and get the ACK for it, b) the average number of bits in flight
-  is `W` and c) no packet loss occurs, then by Little's law the throughput
-  during this time period is equal to `W/RTT` bits/s.
+  is `F` and c) no packet loss occurs, then by Little's law the throughput over
+  this time period is `F/RTT`. If the window size is `W`, then in the best-case,
+  when a full window is in flight all the time, average number of bits in flight
+  is equal `W` and hence throughput can be at most equal to `W/RTT`.
 
 - It follows that for a single TCP connection to reach optimal bandwidth, the
   effective window `W = min(rwnd, cwnd)` needs to get at least equal to the BDP
@@ -136,8 +141,8 @@ to be respected by the side that is sending the data:
 
     - when `cwnd = ssthresh`, implementation can choose either mode
 
-- TCP starts in slow start, `ssthresh` starts arbitrary high, `cwnd` starts as a
-  low multiple of `mss` (on Linux: `10*mss`)
+- TCP starts in slow start, `ssthresh` starts arbitrarily high, `cwnd` starts as
+  a low multiple of `mss` (on Linux: `10*mss`)
 
 - On retransmission timeout:  
   `ssthresh = max(bytes_in_flight/2, 2*sender_mss)`
