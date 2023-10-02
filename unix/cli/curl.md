@@ -27,7 +27,7 @@ Use of stdout and stderr by curl is a complicated story:
   by `-w/--write-out`
 - output enabled by `-v/--verbose` is written to stderr
 - output enabled by `-w/--write-out` is written to stdout after the response
-  body, unless '%{stderr}` is used in the format string
+  body, unless `%{stderr}` is used in the format string
 - if `-i/--include` is specified, response headers are considered part of
   the output and are written out (before the response body) to the location
   specified in `-o/--output`, or to stdout by default
