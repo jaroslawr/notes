@@ -22,19 +22,19 @@ Write a HTTP log file with request headers, response headers and response body:
 
 Use of stdout and stderr by curl is a complicated story:
 - response body is written to stdout by default
-- `-o/--output <file>` controls where the response body is written, but it
-  does not affect the additional output that is enabled by `-v/--verbose` or
-  by `-w/--write-out`
+- response body can be redirected to a file using `-o/--output <file>`
+- with `-i/--include`, response headers are also considered part of the output
+  and are written out (before the response body) to the location specified in
+  `-o/--output`, or to stdout by default
+- `-o/--output` does NOT affect the additional output that is enabled by
+  `-v/--verbose` or by `-w/--write-out`
 - output enabled by `-v/--verbose` is written to stderr
 - output enabled by `-w/--write-out` is written to stdout after the response
   body, unless `%{stderr}` is used in the format string
-- if `-i/--include` is specified, response headers are considered part of
-  the output and are written out (before the response body) to the location
-  specified in `-o/--output`, or to stdout by default
-- when stdout is not a tty curl starts printing a progress bar on stderr,
-  even when stderr also is not a tty
-- progress bar can be disabled with `-s/--silent`, but this also disables
-  error reporting, which can be reenabled with `-S/--show-error`
+- when stdout is not a tty curl starts printing a progress bar on stderr, even
+  when stderr also is not a tty
+- progress bar can be disabled with `-s/--silent`, but this also disables error
+  reporting, which can be reenabled with `-S/--show-error`
 
 ## Options
 
