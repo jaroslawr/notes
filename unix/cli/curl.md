@@ -10,13 +10,13 @@ postprocessing:
 
     curl --data-binary @- <url>
 
-Show HTTP statistics regarding timing etc., as JSON:
+Print response code and response time:
 
-    curl -w '%{json}' -o /dev/null <url>
+    curl -sS -o /dev/null -w '%{response_code} %{time_total}\n' <url>
 
 Write a HTTP log file with request headers, response headers and response body:
 
-    curl -vsS <url> &>log
+    curl -sS -v <url> &>log
 
 ## Notes
 
