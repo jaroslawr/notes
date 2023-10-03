@@ -25,7 +25,8 @@ Use of stdout and stderr by curl is a complicated story:
 - `-i/--include` enables writing out the response headers to stdout before the
   response body
 - `-o/--output <file>` affects the response body and optionally the response
-  headers included by using `-i/--include`, redirecting this output to `file`
+  headers included by using `-i/--include`, redirecting those parts of output to
+  `file`
 - `-o/--output` does NOT affect the additional output that is enabled by
   `-v/--verbose` or by `-w/--write-out`
 - output enabled by `-v/--verbose` is written to stderr
