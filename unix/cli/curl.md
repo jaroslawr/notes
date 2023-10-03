@@ -21,7 +21,7 @@ Write a HTTP log file with request headers, response headers and response body:
 ## Notes
 
 Use of stdout and stderr by curl is a complicated story:
-- by default, the response body is the only output and it is written to stdout
+- the response body is the only default output and it is written to stdout
 - `-i/--include` enables writing out the response headers to stdout before the
   response body
 - `-o/--output <file>` affects the response body and optionally the response
