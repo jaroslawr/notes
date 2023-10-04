@@ -1,22 +1,33 @@
 # curl
 
+Send HTTP GET request, output the response body:
+
+    curl <url>
+
+Send HTTP GET request, output the response code and the total time taken to send
+the request and receive the response:
+
+    curl -sS -o /dev/null -w '%{response_code} %{time_total}\n' <url>
+
+Send HTTP GET request, write request headers, response headers and response body
+to a log file:
+
+    curl -sS -v <url> &>log
+
+Send HTTP POST request with `file` as request payload, stripping CR/LF from the
+input, output the response body:
+
+    curl --data @file <url>
+
 Send HTTP POST request with stdin as request payload, stripping CR/LF from the
-input:
+input, output the response body:
 
     curl --data @- <url>
 
 Send HTTP POST request with stdin as request payload, without input
-postprocessing:
+postprocessing, output the response body:
 
     curl --data-binary @- <url>
-
-Print response code and response time:
-
-    curl -sS -o /dev/null -w '%{response_code} %{time_total}\n' <url>
-
-Write a HTTP log file with request headers, response headers and response body:
-
-    curl -sS -v <url> &>log
 
 ## Notes
 
