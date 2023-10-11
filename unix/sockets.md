@@ -115,6 +115,14 @@ Active close can be initiated by either side of the connection:
     will return the total size of the buffer, twice what was set with
     `setsockopt`.
 
+- `net.ipv4.tcp_mem` sysctl is a system-wide limit on the amount of memory that
+  can be used up by socket buffers. It is specified as a vector of three
+  integers: min, pressure and max size measured as number of memory pages - when
+  memory used by socket buffers exceeds the pressure threshold the TCP stack
+  will start constraining the socket buffer sizes until the used memory falls
+  below the min threshold again. The current amount of memory occupied by socket
+  buffers can be read from `/proc/net/sockstat`, also in units of memory pages.
+
 ### Number of open file descriptors (affects server-side and client-side)
 
 - `fs.file-max` sysctl - system-wide limit on the number of open file
